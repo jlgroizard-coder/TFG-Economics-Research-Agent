@@ -1,0 +1,9 @@
+# Nunca publicar trabajos o expedientes personales
+student-work/
+estudiantes/
+datos_privados/
+*.env
+.env*
+__pycache__/
+.pytest_cache/
+.DS_Store
