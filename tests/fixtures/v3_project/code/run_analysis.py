@@ -89,7 +89,7 @@ def run():
     }
     (OUT/"summary.json").write_text(json.dumps(summary,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     with (OUT/"regional_2024.csv").open("w",encoding="utf-8",newline="") as f:
-        w=csv.writer(f)
+        w=csv.writer(f, lineterminator="\n")
         w.writerow(["region","year","real_wage","tourists_per_resident"])
         for r in sorted((r for r in rows if r["year"]==2024),key=lambda r:r["region"]):
             w.writerow([r["region"],r["year"],f'{r["real_wage"]:.2f}',f'{r["intensity"]:.4f}'])
