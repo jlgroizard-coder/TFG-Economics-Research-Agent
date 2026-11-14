@@ -58,3 +58,7 @@ Para teoría, E evalúa pruebas y su consistencia; G evalúa trazabilidad de der
 
 ## Interpretación
 0–4,9 insuficiente; 5–6,9 básico; 7–7,9 notable; 8–8,9 muy sólido; 9–10 excepcional para nivel de grado. Nunca redondear estratégicamente para subir de tramo.
+
+
+## Alcance y disponibilidad de evidencia (v0.2)
+La fórmula anterior solo se aplica a un **expediente completo evaluable**. Si una sección no acompaña al último envío, consultar documentos anteriores accesibles y verificar su vigencia antes de puntuar. Si evidencia esencial no puede reabrirse, indicar `no evaluable` para esa dimensión y una **evaluación provisional**, sin convertir automáticamente el ausente en cero ni presentar una nueva nota global definitiva. Los indicadores técnicos independientes se encuentran en `references/indicadores-tecnicos.md`.

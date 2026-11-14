@@ -25,7 +25,10 @@ Indica diagnóstico, razón económica, siguiente paso factible y hasta tres tar
 4. Aplica límites máximos por deficiencias críticas, explica por qué y cómo superarlos.
 5. Completa `templates/informe-evaluacion.md`, con tres mejoras prioritarias y preguntas de comprensión.
 6. Solo incrementa la nota frente a una versión anterior por evidencia verificable y comprobaciones realmente efectuadas.
-7. Si no dispones del manuscrito o los materiales, no simules haberlo leído. Da diagnóstico parcial y solicita la evidencia imprescindible.
+7. Antes de comparar revisiones, lee `references/expediente-y-continuidad.md` y recupera evidencia vigente de documentos anteriores; si no está accesible, marca `no_aportada_ahora` y no presumas que el contenido ha desaparecido.
+8. Declara el alcance: expediente completo, capítulo parcial o provisional. No compares una puntuación parcial como si fuera una nota global del TFG.
+9. Reporta **tres indicadores separados** según `references/indicadores-tecnicos.md`: calidad científica (también por etapa), reproducibilidad técnica y correspondencia manuscrito–resultados. No promedies las tres notas.
+10. Si no dispones del manuscrito o de evidencia esencial, no simules haberlo leído ni asignes un cero por falta de acceso; solicita los materiales y reporta lo evaluable.
 
 ## Reproducibilidad
 Para estudios empíricos exige fuentes, datos no restringidos o instrucciones de acceso, código, dependencias, procedimientos y resultados. Si hay permiso, ejecuta código en entorno controlado y compara las salidas con el manuscrito. Para teoría, exige derivaciones, supuestos y simulaciones cuando existan; para revisiones, protocolo de selección bibliográfica. Una comprobación de presencia de archivos NO equivale a reproducir resultados.

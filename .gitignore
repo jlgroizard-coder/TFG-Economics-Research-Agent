@@ -7,3 +7,7 @@ datos_privados/
 __pycache__/
 .pytest_cache/
 .DS_Store
+
+# Carpetas privadas de expedientes locales
+expedientes/
+private-work/

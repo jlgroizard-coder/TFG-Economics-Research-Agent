@@ -23,3 +23,10 @@
 - ¿Qué cambiaría si la muestra o la especificación fueran otras?
 
 Usa la plantilla `templates/informe-evaluacion.md`. La evaluación oficial sigue siendo responsabilidad de la UIB.
+
+
+## Continuidad y múltiples puntuaciones (v0.2)
+- Consultar `references/expediente-y-continuidad.md` y archivos previos accesibles antes de recalificar un expediente completo. No interpretar un capítulo ausente del último envío como trabajo perdido.
+- Si no se puede reabrir evidencia anterior esencial, registrar `no_aportada_ahora`; mostrar evaluación provisional o parcial, sin nueva nota global definitiva ni comparación directa.
+- Aplicar dos rúbricas técnicas complementarias de `references/indicadores-tecnicos.md`, sin promediarlas con la puntuación científica.
+- En el caso de pruebas **sintéticas**, distinguir validez del script con datos simulados de validez empírica de una investigación real.

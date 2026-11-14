@@ -1,6 +1,6 @@
 # Tutor IA del TFG en Economía — UIB
 
-**Agente académico abierto · v0.1.0 · noviembre de 2026**
+**Agente académico abierto · v0.2.0 · noviembre de 2026**
 
 Este proyecto ayuda a estudiantes del Grado en Economía de la Universitat de les Illes Balears a preparar investigaciones científicas rigurosas, comprender la literatura, mejorar propuestas y manuscritos y producir un paquete reproducible. Ofrece una **evaluación formativa**, nunca una nota oficial de la UIB.
 
@@ -21,7 +21,7 @@ Este proyecto ayuda a estudiantes del Grado en Economía de la Universitat de le
 5. Guarda cada informe y aplica sus tres mejoras prioritarias.
 6. Para entregar, prepara manuscrito, datos o instrucciones de acceso, programas, figuras, tablas y README de reproducción.
 
-La puntuación incluye una **nota actual del TFG completo** y otra relativa a **la etapa**. Solo sube ante mejoras verificables; no por insistir ni por texto generado automáticamente.
+El informe distingue **calidad científica** (total y por etapa), **reproducibilidad técnica** y **correspondencia manuscrito–resultados**: son tres indicadores independientes, no una media. Una nota de un criterio no desciende automáticamente porque su capítulo no venga en el último archivo: debe consultarse el expediente y comprobar su vigencia. **Sin acceso a evidencia esencial, la nota es provisional o no evaluable, no cero por defecto.**
 
 ## Estructura
 
@@ -29,6 +29,10 @@ La puntuación incluye una **nota actual del TFG completo** y otra relativa a **
 - `references/`: rúbrica, protocolo, ética y guía UIB.
 - `.agents/skills/` y `.claude/skills/`: cinco habilidades especializadas.
 - `templates/`: ficha de artículo, propuesta, informe y documentación.
+- `references/expediente-y-continuidad.md`: expediente privado y reglas de continuidad.
+- `references/indicadores-tecnicos.md`: dos escalas técnicas independientes.
+- `schemas/expediente.schema.json`: formato del expediente.
+- `scripts/expediente.py`: inicialización, auditoría y registro local de evidencias.
 - `scripts/audit_package.py`: comprobación estructural estática.
 - `scripts/test_audit.py`: pruebas del auditor.
 

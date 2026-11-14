@@ -1,0 +1,201 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Expediente privado TFG Economía",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "student_id",
+    "course",
+    "modality",
+    "stage",
+    "research_question",
+    "artifacts",
+    "evidence",
+    "evaluations"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.2"
+    },
+    "student_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Seudónimo local; no incluir identificadores personales"
+    },
+    "course": {
+      "type": "string"
+    },
+    "modality": {
+      "enum": [
+        "empirico",
+        "teorico",
+        "revision",
+        "mixto"
+      ]
+    },
+    "stage": {
+      "type": "string",
+      "pattern": "^E(0[1-9]|1[0-4])$"
+    },
+    "research_question": {
+      "type": "string"
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "kind",
+          "version"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "propuesta",
+              "literatura",
+              "teoria",
+              "datos",
+              "codigo",
+              "resultados",
+              "manuscrito",
+              "reproduccion",
+              "otros"
+            ]
+          },
+          "version": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "checked_at": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "criterion",
+          "status",
+          "artifact_path",
+          "version",
+          "note"
+        ],
+        "properties": {
+          "criterion": {
+            "enum": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F",
+              "G",
+              "H"
+            ]
+          },
+          "status": {
+            "enum": [
+              "vigente_verificada",
+              "vigente_no_verificada",
+              "no_aportada_ahora",
+              "desactualizada",
+              "refutada",
+              "pendiente"
+            ]
+          },
+          "artifact_path": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "checked_at": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "verification": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "evaluations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "version",
+          "stage",
+          "scope",
+          "report_path"
+        ],
+        "properties": {
+          "version": {
+            "type": "string"
+          },
+          "stage": {
+            "type": "string"
+          },
+          "scope": {
+            "enum": [
+              "expediente_completo",
+              "parcial",
+              "provisional"
+            ]
+          },
+          "report_path": {
+            "type": "string"
+          },
+          "complete_score": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 10
+          },
+          "stage_score": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 10
+          },
+          "technical_score": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 10
+          },
+          "consistency_score": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 10
+          }
+        }
+      }
+    }
+  }
+}
