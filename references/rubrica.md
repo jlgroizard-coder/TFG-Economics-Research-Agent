@@ -29,6 +29,18 @@
 | E05–E08 | A15, B15, C15, D15, E10, F5, G5, H10 | 90 |
 | E09–E14 | Todos | 100 |
 
+### Regla de conversión obligatoria entre escalas
+
+Para evitar que cada modelo invente un procedimiento, aplicar siempre el siguiente algoritmo:
+
+1. Asignar una puntuación completa `s_i` en cada dimensión A–H, entre 0 y su máximo `M_i`, con evidencia.
+2. Para la **nota de etapa**, obtener de la tabla anterior el máximo exigible `m_i` por dimensión (0 si todavía no se exige). Calcular **`e_i = s_i × m_i / M_i`**, conservando al menos dos decimales internamente.
+3. Calcular **`nota_completa = Σ s_i / 10`** y **`nota_etapa = 10 × Σ e_i / Σ m_i`**.
+4. Aplicar el tope grave pertinente sobre ambas notas si se refiere a un requisito ya exigible; no imponer por adelantado topes por resultados o reproducibilidad todavía no exigibles, salvo fabricación de evidencia o faltas de integridad presentes.
+5. Mostrar los `s_i`, `e_i`, `M_i`, `m_i`, denominadores y topes, con redondeo final a **una cifra decimal**. No redondear antes de calcular.
+
+**Ejemplo E03:** si E (datos) obtiene `s_E = 2/10`, su puntuación para la etapa es `e_E = 2 × 5/10 = 1/5`. Esta regla es **proporcional y predeterminada**, no una decisión discrecional del asistente.
+
 En etapas tempranas, explicar criterios aún no exigibles. Evitar comparar directamente la nota de etapa con una nota del TFG final.
 
 ## Topes por fallos graves
