@@ -64,6 +64,29 @@ def evidence(base, criterion, status, rel, version, note):
     save_case(base,obj)
     return row
 
+def add_evaluation(base, version, stage, scope, report_path, complete=None, stage_score=None, technical=None, consistency=None):
+    if scope not in ("expediente_completo", "parcial", "provisional"):
+        raise ValueError("Alcance desconocido")
+    if stage not in {f"E{i:02d}" for i in range(1,15)}:
+        raise ValueError("Etapa E01–E14 inválida")
+    if scope != "expediente_completo" and (complete is not None or stage_score is not None):
+        raise ValueError("Una evaluación parcial/provisional no puede registrar notas científicas globales")
+    scores=(complete,stage_score,technical,consistency)
+    if any(x is not None and not 0 <= x <= 10 for x in scores):
+        raise ValueError("Notas fuera del intervalo 0–10")
+    path=inside(base,report_path)
+    if not path.is_file():
+        raise ValueError("Informe de evaluación no encontrado")
+    obj=open_case(base)
+    if any(x["version"]==version and x["report_path"]==report_path for x in obj["evaluations"]):
+        raise ValueError("Evaluación ya registrada")
+    row={"version":version,"stage":stage,"scope":scope,"report_path":report_path,
+         "complete_score":complete,"stage_score":stage_score,
+         "technical_score":technical,"consistency_score":consistency}
+    obj["evaluations"].append(row)
+    save_case(base,obj)
+    return row
+
 def audit(base):
     obj=open_case(base)
     found=[]
@@ -86,12 +109,20 @@ def main():
     p=sub.add_parser("add-evidence");p.add_argument("folder");p.add_argument("--criterion",required=True,choices=list(CRITERIA))
     p.add_argument("--status",required=True,choices=sorted(STATES));p.add_argument("--path",required=True)
     p.add_argument("--version",required=True);p.add_argument("--note",required=True)
+    p=sub.add_parser("add-evaluation")
+    p.add_argument("folder");p.add_argument("--version",required=True)
+    p.add_argument("--stage",required=True)
+    p.add_argument("--scope",required=True,choices=["expediente_completo","parcial","provisional"])
+    p.add_argument("--report",required=True)
+    p.add_argument("--complete",type=float);p.add_argument("--stage-score",type=float)
+    p.add_argument("--technical",type=float);p.add_argument("--consistency",type=float)
     p=sub.add_parser("audit");p.add_argument("folder")
     args=ap.parse_args()
     base=Path(args.folder).expanduser()
     if args.action=="init":res={"created":str(init_case(base,args.id))}
     elif args.action=="add-artifact":res=add_artifact(base,args.path,args.kind,args.version)
     elif args.action=="add-evidence":res=evidence(base,args.criterion,args.status,args.path,args.version,args.note)
+    elif args.action=="add-evaluation":res=add_evaluation(base,args.version,args.stage,args.scope,args.report,args.complete,args.stage_score,args.technical,args.consistency)
     else:res=audit(base)
     print(json.dumps(res,indent=2,ensure_ascii=False))
 
