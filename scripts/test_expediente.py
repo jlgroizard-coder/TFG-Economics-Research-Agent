@@ -2,7 +2,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
-from expediente import init_case, add_artifact, evidence, audit, open_case
+from expediente import init_case, add_artifact, evidence, audit, open_case, add_evaluation
 
 class ExpedienteTests(unittest.TestCase):
     def test_init_is_private_and_does_not_overwrite(self):
@@ -38,6 +38,19 @@ class ExpedienteTests(unittest.TestCase):
             path.write_text("b",encoding="utf-8")
             self.assertFalse(audit(root)["artifacts"][0]["unchanged"])
             self.assertIn("NO demuestra",audit(root)["warning"])
+
+    def test_provisional_evaluation_does_not_invent_global_score(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d)/"case"
+            init_case(root,"SINTETICO")
+            report=root/"evaluaciones"/"v3.md"
+            report.write_text("Evaluación de capítulo",encoding="utf-8")
+            with self.assertRaises(ValueError):
+                add_evaluation(root,"v3","E09","parcial","evaluaciones/v3.md",complete=3.5)
+            row=add_evaluation(root,"v3","E09","parcial","evaluaciones/v3.md",
+                               technical=9.0,consistency=2.0)
+            self.assertIsNone(row["complete_score"])
+            self.assertEqual(len(open_case(root)["evaluations"]),1)
 
     def test_block_path_traversal(self):
         with tempfile.TemporaryDirectory() as d:
