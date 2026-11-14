@@ -1,0 +1,20 @@
+[Reading 18 lines from start (total: 18 lines, 0 remaining)]
+
+{
+  "dataset": "100% sintético",
+  "rows": 64,
+  "regions": 8,
+  "years": [
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "year_2020_included": true,
+  "beta_two_way_fe_descriptive": 0.119882,
+  "interpretation": "asociación condicional; NO es causal; x=log(1+turistas/población)"
+}

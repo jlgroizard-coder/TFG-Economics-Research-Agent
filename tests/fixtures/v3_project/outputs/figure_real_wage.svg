@@ -1,0 +1,20 @@
+[Reading 18 lines from start (total: 18 lines, 0 remaining)]
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 690 340">
+<rect width="690" height="340" fill="white"/>
+<text x="70" y="30" font-family="sans-serif" font-size="17">Salario real anual (datos sintéticos)</text>
+<path d="M70 70 L70 280 L590 280" fill="none" stroke="black"/>
+<polyline points="70.0,216.6 144.0,214.0 218.0,215.7 292.0,230.5 366.0,205.5 440.0,241.9 514.0,230.8 588.0,226.6" fill="none" stroke="steelblue" stroke-width="3"/>
+<text x="590" y="49" font-family="sans-serif" font-size="13" fill="steelblue">Baleares_SIM</text>
+<polyline points="70.0,147.0 144.0,144.9 218.0,134.9 292.0,137.6 366.0,108.1 440.0,156.7 514.0,157.3 588.0,156.8" fill="none" stroke="darkorange" stroke-width="3"/>
+<text x="590" y="71" font-family="sans-serif" font-size="13" fill="darkorange">Canarias_SIM</text>
+<text x="70" y="302" text-anchor="middle" font-family="sans-serif" font-size="11">2017</text>
+<text x="144" y="302" text-anchor="middle" font-family="sans-serif" font-size="11">2018</text>
+<text x="218" y="302" text-anchor="middle" font-family="sans-serif" font-size="11">2019</text>
+<text x="292" y="302" text-anchor="middle" font-family="sans-serif" font-size="11">2020</text>
+<text x="366" y="302" text-anchor="middle" font-family="sans-serif" font-size="11">2021</text>
+<text x="440" y="302" text-anchor="middle" font-family="sans-serif" font-size="11">2022</text>
+<text x="514" y="302" text-anchor="middle" font-family="sans-serif" font-size="11">2023</text>
+<text x="588" y="302" text-anchor="middle" font-family="sans-serif" font-size="11">2024</text>
+<text x="70" y="328" font-family="sans-serif" font-size="11">SIMULADO: no representa salarios reales de las regiones españolas.</text>
+</svg>
