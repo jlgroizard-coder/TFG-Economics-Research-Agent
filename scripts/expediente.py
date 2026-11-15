@@ -77,9 +77,22 @@ def confirmed_status(base, obj, row):
         health = artifact_health(base, a)
         if health != "intacta":
             return health
-    elif row["status"] in ("vigente_verificada", "vigente_no_verificada"):
-        path = inside(base, row["artifact_path"])
-        return "no_aportada_ahora" if not path.is_file() else "desactualizada"
+    else:
+        historical = [r for r in obj["evidence"]
+                      if r["criterion"] == row["criterion"]
+                      and r["artifact_path"] == row["artifact_path"]
+                      and r["status"] == "vigente_verificada"]
+        for record in historical:
+            prior = next((a for a in obj["artifacts"]
+                          if a["path"] == record["artifact_path"]
+                          and a["version"] == record["version"]), None)
+            if prior:
+                health = artifact_health(base, prior)
+                if health != "intacta":
+                    return health
+        if row["status"] in ("vigente_verificada", "vigente_no_verificada"):
+            path = inside(base, row["artifact_path"])
+            return "no_aportada_ahora" if not path.is_file() else "desactualizada"
     return row["status"]
 
 def migrate_legacy_reports(base, reason):
