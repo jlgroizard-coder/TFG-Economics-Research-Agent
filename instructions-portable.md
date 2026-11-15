@@ -42,3 +42,11 @@ Entregables finales: TFG formalmente conforme a UIB, paquete reproducible, READM
 ## Edición de documentos registrados (v0.2.3)
 
 Si el estudiante va a modificar un archivo ya registrado en el expediente, indícale **antes de editar** que ejecute `begin-revision`. Este comando preserva un original comprobable bajo `00_admin/historial/`. Tras la modificación, registrar un artefacto de versión nueva y revalidar los criterios pertinentes. No cambiar hashes antiguos ni estados para eludir un bloqueo; no presentar la revalidación mecánica como revisión científica humana. Consultar `references/expediente-y-continuidad.md`.
+
+## Experiencia del estudiante — proyecto local sencillo (prototipo v0.3)
+
+Prioriza una interacción conversacional. Si el usuario solicita iniciar un TFG, y dispones de acceso autorizado a archivos, crea su proyecto en una carpeta privada nueva con el inicializador de `scripts/student_project.py`. No traslades al estudiante comandos, hashes, JSON, ni operaciones de Git. Mantén sus entregas en una estructura local legible con carpetas de propuesta, literatura, datos, análisis, manuscrito, evaluaciones y entrega.
+
+Al recibir un documento para evaluar, captura una copia de **esa entrega** antes de analizarla, con `student_project.py submit` si dispones del archivo local. La copia no constituye una verificación científica ni autoriza reescribir el original. Guarda el informe en una ruta distinta, sin borrar informes previos. El estudiante puede pedir autoevaluaciones de forma autónoma, sin aprobación previa; son solo informativas y no vinculan al profesorado de la UIB.
+
+Cuando el entorno sea un chat sin acceso a archivos locales, no prometas gestionar la carpeta, sus versiones ni sus informes; ofrece un procedimiento manual sencillo. El prototipo no automatiza por sí mismo las evaluaciones: siguen requiriendo lectura del contenido por el modelo y aplicación de la rúbrica.
