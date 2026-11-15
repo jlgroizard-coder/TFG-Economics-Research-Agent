@@ -43,7 +43,65 @@ def open_case(base):
     obj.setdefault("decisions", [])
     return obj
 
-def save_case(base, obj):
+def mark_scores_stale(obj, reason):
+    for row in obj["evaluations"]:
+        if row.get("scope") == "expediente_completo" and not row.get("revoked_at") and not row.get("stale_at"):
+            row["stale_at"] = now()
+            row["stale_reason"] = reason
+
+def artifact_health(base, a):
+    path = inside(base, a["path"])
+    if not path.is_file():
+        return "no_aportada_ahora"
+    if not a.get("sha256") or hash_file(path) != a["sha256"]:
+        return "desactualizada"
+    return "intacta"
+
+def historic_integrity_problems(base, obj):
+    """New labels may not hide missing/modified previously verified evidence."""
+    index = {(a["path"], a["version"]): a for a in obj["artifacts"]}
+    verified = {(r["criterion"], r["artifact_path"], r["version"])
+                for r in obj["evidence"] if r["status"] == "vigente_verificada"}
+    problems = []
+    for criterion, path, version in sorted(verified):
+        a = index.get((path, version))
+        state = artifact_health(base, a) if a else "sin_registro"
+        if state != "intacta":
+            problems.append(f"{criterion}: {path} ({version}) {state}")
+    return problems
+
+def confirmed_status(base, obj, row):
+    a = next((a for a in reversed(obj["artifacts"])
+              if a["path"] == row["artifact_path"] and a["version"] == row["version"]), None)
+    if a:
+        health = artifact_health(base, a)
+        if health != "intacta":
+            return health
+    elif row["status"] in ("vigente_verificada", "vigente_no_verificada"):
+        path = inside(base, row["artifact_path"])
+        return "no_aportada_ahora" if not path.is_file() else "desactualizada"
+    return row["status"]
+
+def migrate_legacy_reports(base, reason):
+    """Establish CURRENT integrity baseline; cannot attest old history."""
+    obj = open_case(base)
+    changed = []
+    for row in obj["evaluations"]:
+        if row.get("report_sha256"):
+            continue
+        path = inside(base, row["report_path"])
+        if not path.is_file():
+            continue
+        row["report_sha256"] = hash_file(path)
+        row["legacy_baseline_at"] = now()
+        row["legacy_baseline_note"] = reason
+        changed.append(row["report_path"])
+    if changed:
+        save_case(base, obj)
+    return {"baselines_created": changed,
+            "warning": "La huella acredita solo el contenido actual; NO demuestra integridad histórica."}
+
+
     inside(base, "expediente.json").write_text(
         json.dumps(obj, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
@@ -75,6 +133,7 @@ def add_artifact(base, rel, kind, version):
     if any(x["path"] == rel and x["version"] == version for x in obj["artifacts"]):
         raise ValueError("La misma versión de artefacto ya está registrada; crea otra versión")
     obj["artifacts"].append(row)
+    mark_scores_stale(obj, "Se registró un nuevo artefacto")
     save_case(base, obj)
     return row
 
@@ -90,6 +149,7 @@ def add_evidence(base, criterion, status, rel, version, note):
         if not linked or not path.is_file() or hash_file(path) != linked[-1].get("sha256"):
             raise ValueError("Para validar evidencia hay que registrar y conservar el archivo exacto")
     obj["evidence"].append(row)
+    mark_scores_stale(obj, "Cambió el registro de evidencia")
     save_case(base, obj)
     return row
 
@@ -98,17 +158,11 @@ def effective_evidence(base, obj):
     latest = {}
     for row in obj["evidence"]:
         latest[(row["criterion"], row["artifact_path"])] = dict(row)
-    indexed = {(a["path"], a["version"]): a for a in obj["artifacts"]}
     for row in latest.values():
-        if row["status"] == "vigente_verificada":
-            artifact = indexed.get((row["artifact_path"], row["version"]))
-            path = inside(base, row["artifact_path"])
-            if not artifact or not path.is_file():
-                row["status"] = "no_aportada_ahora"
-                row["alert"] = "Archivo de respaldo inaccesible"
-            elif hash_file(path) != artifact.get("sha256"):
-                row["status"] = "desactualizada"
-                row["alert"] = "Archivo modificado; requiere revalidación"
+        status = confirmed_status(base, obj, row)
+        if status != row["status"]:
+            row["alert"] = "Estado comprobado por integridad de archivo, no por su etiqueta"
+            row["status"] = status
     return list(latest.values())
 
 def add_decision(base, change, detail, value=None):
@@ -132,6 +186,7 @@ def add_decision(base, change, detail, value=None):
     if change == "pregunta" and value is not None:
         obj["research_question"] = value
     obj["decisions"].append(decision)
+    mark_scores_stale(obj, "Nueva decisión sobre "+change)
     save_case(base, obj)
     with inside(base, "decisiones.md").open("a", encoding="utf-8") as f:
         f.write("\n- "+decision["time"]+" | "+change+" | "+detail+"\n")
@@ -165,6 +220,7 @@ def add_evaluation(base, version, stage, scope, report_path,
                 problems.append(criterion + " sin evidencia documentada")
             if any(x["status"] in ("no_aportada_ahora", "desactualizada") for x in rows):
                 problems.append(criterion + " con evidencia inaccesible/desactualizada")
+        problems.extend(historic_integrity_problems(base, obj))
         if problems:
             raise ValueError("No se puede emitir nota global: " + "; ".join(problems))
     if any(x["version"] == version and x["report_path"] == report_path
@@ -207,8 +263,11 @@ def audit(base):
         path = inside(base, x["report_path"])
         reports.append({"version": x["version"], "report_path": x["report_path"],
                         "intact": path.is_file() and hash_file(path) == x.get("report_sha256"),
-                        "revoked": bool(x.get("revoked_at"))})
+                        "revoked": bool(x.get("revoked_at")),
+                        "obsolete": bool(x.get("stale_at")),
+                        "legacy_baseline_only": bool(x.get("legacy_baseline_at"))})
     return {"student_id": obj["student_id"], "artifacts": artifacts,
+            "historic_integrity_problems": historic_integrity_problems(base, obj),
             "effective_evidence": effective,
             "effective_status_counts": {s: sum(x["status"] == s for x in effective)
                                         for s in sorted(STATES)},
@@ -240,6 +299,8 @@ def main():
     p = sub.add_parser("revoke-evaluation"); p.add_argument("folder")
     p.add_argument("--version", required=True); p.add_argument("--report", required=True)
     p.add_argument("--reason", required=True)
+    p = sub.add_parser("migrate-legacy"); p.add_argument("folder")
+    p.add_argument("--reason", required=True)
     p = sub.add_parser("audit"); p.add_argument("folder")
     args = ap.parse_args()
     base = Path(args.folder).expanduser()
@@ -258,6 +319,8 @@ def main():
                                 args.complete, args.stage_score, args.technical, args.consistency)
     elif args.action == "revoke-evaluation":
         result = revoke_evaluation(base, args.version, args.report, args.reason)
+    elif args.action == "migrate-legacy":
+        result = migrate_legacy_reports(base, args.reason)
     else:
         result = audit(base)
     print(json.dumps(result, ensure_ascii=False, indent=2))

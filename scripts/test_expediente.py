@@ -2,7 +2,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from expediente import (init_case, add_artifact, add_evidence, add_decision,
-                        add_evaluation, revoke_evaluation, audit, open_case)
+                        add_evaluation, revoke_evaluation, audit, open_case, migrate_legacy_reports)
 
 class ExpedienteTests(unittest.TestCase):
     def setUp(self):
@@ -104,6 +104,55 @@ class ExpedienteTests(unittest.TestCase):
             add_evidence(self.root, "A", "pendiente", "../outside", "v1", "x")
         with self.assertRaises(ValueError):
             add_evidence(self.root, "A", "pendiente", "/tmp/outside", "v1", "x")
+
+
+    def test_status_overwrite_cannot_hide_missing_verified_file(self):
+        for c in "ABCDEFGH":
+            self.validated(c, "01_propuesta/"+c+".md")
+        self.file("evaluaciones/test.md")
+        (self.root/"01_propuesta/B.md").unlink()
+        for status in ("pendiente","vigente_no_verificada"):
+            add_evidence(self.root,"B",status,"01_propuesta/B.md","v3","Intento de elusión")
+            with self.assertRaises(ValueError):
+                add_evaluation(self.root,"v3","E09","expediente_completo",
+                               "evaluaciones/test.md",3.8,3.8)
+        self.assertEqual(len(open_case(self.root)["evaluations"]),0)
+
+    def test_status_overwrite_cannot_hide_modified_verified_file(self):
+        for c in "ABCDEFGH":
+            self.validated(c, "01_propuesta/"+c+".md")
+        self.file("evaluaciones/test.md")
+        self.file("01_propuesta/C.md","modificado")
+        add_evidence(self.root,"C","pendiente","01_propuesta/C.md","v3","Intento de elusión")
+        self.assertEqual([x for x in audit(self.root)["effective_evidence"]
+                          if x["criterion"]=="C"][0]["status"],"desactualizada")
+        with self.assertRaises(ValueError):
+            add_evaluation(self.root,"v3","E09","expediente_completo",
+                           "evaluaciones/test.md",3.8,3.8)
+
+    def test_stale_global_score_on_decision_and_evidence_change(self):
+        for c in "ABCDEFGH":
+            self.validated(c, "01_propuesta/"+c+".md")
+        self.file("evaluaciones/test.md")
+        add_evaluation(self.root,"v3","E09","expediente_completo",
+                       "evaluaciones/test.md",3.8,3.8)
+        add_decision(self.root,"pregunta","Nueva pregunta","Nueva")
+        self.assertTrue(audit(self.root)["evaluation_reports"][0]["obsolete"])
+
+    def test_legacy_migration_does_not_claim_historical_integrity(self):
+        for c in "ABCDEFGH":
+            self.validated(c, "01_propuesta/"+c+".md")
+        self.file("evaluaciones/test.md")
+        add_evaluation(self.root,"v3","E09","expediente_completo",
+                       "evaluaciones/test.md",3.8,3.8)
+        obj=open_case(self.root)
+        del obj["evaluations"][0]["report_sha256"]
+        from expediente import save_case
+        save_case(self.root,obj)
+        self.assertFalse(audit(self.root)["evaluation_reports"][0]["intact"])
+        result=migrate_legacy_reports(self.root,"Acepto línea de base actual")
+        self.assertEqual(len(result["baselines_created"]),1)
+        self.assertTrue(audit(self.root)["evaluation_reports"][0]["legacy_baseline_only"])
 
     def test_nan_scores_rejected(self):
         self.file("evaluaciones/v3.md")

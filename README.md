@@ -1,6 +1,6 @@
 # Tutor IA del TFG en Economía — UIB
 
-**Agente académico abierto · v0.2.1 · noviembre de 2026**
+**Agente académico abierto · v0.2.2 · noviembre de 2026**
 
 Este proyecto ayuda a estudiantes del Grado en Economía de la Universitat de les Illes Balears a preparar investigaciones científicas rigurosas, comprender la literatura, mejorar propuestas y manuscritos y producir un paquete reproducible. Ofrece una **evaluación formativa**, nunca una nota oficial de la UIB.
 

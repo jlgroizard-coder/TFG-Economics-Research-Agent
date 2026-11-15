@@ -206,6 +206,18 @@
           },
           "revoke_reason": {
             "type": "string"
+          },
+          "stale_at": {
+            "type": "string"
+          },
+          "stale_reason": {
+            "type": "string"
+          },
+          "legacy_baseline_at": {
+            "type": "string"
+          },
+          "legacy_baseline_note": {
+            "type": "string"
           }
         }
       }

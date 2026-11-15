@@ -50,3 +50,10 @@ Para registrar una **nota global**, deben existir evidencias documentadas en A鈥
 `revoke-evaluation --version ... --report ... --reason ...` anula una evaluaci贸n **sin borrarla**, y `audit` verifica hashes de los informes.
 
 Una presentaci贸n parcial puede mostrar `19,0 puntos observados de 55 puntos evaluables`, pero **nunca** transformarlo en nota global sobre 10 ni compararlo con una evaluaci贸n completa.
+
+## Controles a帽adidos en v0.2.2
+
+- Un cambio de etiqueta a `pendiente` o `vigente_no_verificada` **no puede ocultar** un documento previamente verificado que se haya perdido o modificado; se comprueba su historial y huella.
+- Nuevas decisiones, artefactos o evidencias marcan las notas globales existentes como **obsoletas** sin borrarlas ni revocarlas retrospectivamente.
+- `migrate-legacy --reason "..."` establece una **l铆nea de base actual** para informes antiguos sin huella; NO certifica su integridad hist贸rica.
+- La revalidaci贸n cient铆fica no se puede certificar mec谩nicamente: el tutor debe revisar las evidencias, la correspondencia con la pregunta y las calificaciones antes de comunicarlas.
