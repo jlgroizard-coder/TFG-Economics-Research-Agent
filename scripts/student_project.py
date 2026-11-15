@@ -145,6 +145,9 @@ def init(root):
                  "indicadores-tecnicos.md", "expediente-y-continuidad.md"):
         shutil.copy2(source / "references" / name,
                      private / "agent" / "references" / name)
+    (private / "agent" / "templates").mkdir(parents=True, exist_ok=True)
+    shutil.copy2(source / "templates" / "informe-evaluacion.md",
+                 private / "agent" / "templates" / "informe-evaluacion.md")
     write_text(root / "LEEME_PRIMERO.md", GUIDE)
     write_text(root / "CLAUDE.md", ROOT_CLAUDE)
     write_text(root / "AGENTS.md", ROOT_AGENTS)
