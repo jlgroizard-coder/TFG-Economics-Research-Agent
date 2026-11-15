@@ -276,12 +276,14 @@ def audit(base):
                               "no_aportada_ahora" if not exists else "desactualizada"})
     effective = effective_evidence(base, obj)
     reports = []
+    integrity_alert = bool(historic_integrity_problems(base, obj))
     for x in obj["evaluations"]:
         path = inside(base, x["report_path"])
         reports.append({"version": x["version"], "report_path": x["report_path"],
                         "intact": path.is_file() and hash_file(path) == x.get("report_sha256"),
                         "revoked": bool(x.get("revoked_at")),
-                        "obsolete": bool(x.get("stale_at")),
+                        "obsolete": bool(x.get("stale_at")) or
+                                    (integrity_alert and x.get("scope") == "expediente_completo"),
                         "legacy_baseline_only": bool(x.get("legacy_baseline_at"))})
     return {"student_id": obj["student_id"], "artifacts": artifacts,
             "historic_integrity_problems": historic_integrity_problems(base, obj),
