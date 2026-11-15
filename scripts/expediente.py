@@ -105,6 +105,10 @@ def migrate_legacy_reports(base, reason):
     inside(base, "expediente.json").write_text(
         json.dumps(obj, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
+def save_case(base, obj):
+    inside(base, "expediente.json").write_text(
+        json.dumps(obj, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
 def init_case(base, student_id):
     base = base.expanduser().resolve()
     if base.exists() and any(base.iterdir()):
