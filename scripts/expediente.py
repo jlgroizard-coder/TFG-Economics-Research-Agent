@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import math
+import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -50,7 +51,9 @@ def mark_scores_stale(obj, reason):
             row["stale_reason"] = reason
 
 def artifact_health(base, a):
-    path = inside(base, a["path"])
+    # Las versiones archivadas se comprueban contra una copia inmutable local
+    # registrada ANTES de editar, nunca contra el archivo de trabajo actual.
+    path = inside(base, a.get("archive_path") or a["path"])
     if not path.is_file():
         return "no_aportada_ahora"
     if not a.get("sha256") or hash_file(path) != a["sha256"]:
@@ -114,10 +117,6 @@ def migrate_legacy_reports(base, reason):
     return {"baselines_created": changed,
             "warning": "La huella acredita solo el contenido actual; NO demuestra integridad histórica."}
 
-
-    inside(base, "expediente.json").write_text(
-        json.dumps(obj, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-
 def save_case(base, obj):
     inside(base, "expediente.json").write_text(
         json.dumps(obj, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -138,13 +137,74 @@ def init_case(base, student_id):
     (base / "decisiones.md").write_text("# Registro privado de decisiones\n", encoding="utf-8")
     return base
 
+def begin_revision(base, rel, old_version, reason):
+    """Conserva un original verificado antes de editarlo en su misma ruta.
+
+    Tras este comando: editar archivo, registrar nueva versión con add-artifact,
+    y revalidar cada criterio afectado mediante add-evidence. No adjudica puntos.
+    """
+    obj = open_case(base)
+    if not reason.strip():
+        raise ValueError("Se requiere explicar el motivo de la revisión")
+    if rel.startswith("00_admin/historial/"):
+        raise ValueError("No se permite revisar una copia histórica como archivo de trabajo")
+    old = next((a for a in obj["artifacts"]
+                if a["path"] == rel and a["version"] == old_version), None)
+    if old is None:
+        raise ValueError("Versión original no registrada")
+    if old.get("archive_path"):
+        raise ValueError("Esa versión ya está archivada")
+    if artifact_health(base, old) != "intacta":
+        raise ValueError("El original ya fue modificado o desapareció; restáuralo desde copia previa")
+    # Se comprueba que no hay otra versión activa de ese mismo archivo.
+    current = [a for a in obj["artifacts"]
+               if a["path"] == rel and not a.get("archive_path")]
+    if len(current) != 1 or current[0]["version"] != old_version:
+        raise ValueError("Versiones activas ambiguas; resolver historial antes de revisar")
+    fingerprint = hashlib.sha256((rel + ":" + old_version).encode("utf-8")).hexdigest()[:20]
+    archive_rel = "00_admin/historial/" + fingerprint + "_" + old["sha256"] + ".snapshot"
+    source = inside(base, rel)
+    dest = inside(base, archive_rel)
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    if dest.exists():
+        if not dest.is_file() or hash_file(dest) != old["sha256"]:
+            raise ValueError("Colisión o alteración de archivo histórico")
+    else:
+        # Copiar el ORIGINAL antes de que el estudiante lo edite.
+        shutil.copy2(source, dest)
+    if hash_file(dest) != old["sha256"]:
+        raise ValueError("No se ha podido preservar íntegramente el original")
+    old["archive_path"] = archive_rel
+    old["archived_at"] = now()
+    old["archive_reason"] = reason
+    invalidated = []
+    for row in effective_evidence(base, obj):
+        if row["artifact_path"] == rel and row["status"] in ("vigente_verificada",
+                                                               "vigente_no_verificada"):
+            obj["evidence"].append({
+                "criterion": row["criterion"], "status": "desactualizada",
+                "artifact_path": rel, "version": old_version,
+                "note": "Revisión abierta, requiere revalidar: " + reason,
+                "checked_at": now()})
+            invalidated.append(row["criterion"])
+    mark_scores_stale(obj, "Revisión del archivo " + rel)
+    save_case(base, obj)
+    return {"archived_original": archive_rel, "original_sha256": old["sha256"],
+            "invalidated_criteria": sorted(set(invalidated)),
+            "next_step": "Editar archivo, add-artifact con versión nueva y add-evidence tras revisión"}
+
 def add_artifact(base, rel, kind, version):
     if kind not in KINDS:
         raise ValueError("Tipo de artefacto desconocido")
     obj = open_case(base)
     path = inside(base, rel)
+    if rel.startswith("00_admin/historial/"):
+        raise ValueError("El archivo histórico no es un entregable editable")
     if not path.is_file():
         raise ValueError("Archivo no encontrado")
+    # Una revisión en la MISMA ruta exige preservar primero la versión previa.
+    if any(a["path"] == rel and not a.get("archive_path") for a in obj["artifacts"]):
+        raise ValueError("Archivo registrado anteriormente: usa begin-revision antes de sustituirlo")
     row = {"path": rel, "kind": kind, "version": version,
            "sha256": hash_file(path), "checked_at": now()}
     if any(x["path"] == rel and x["version"] == version for x in obj["artifacts"]):
@@ -267,10 +327,11 @@ def audit(base):
     obj = open_case(base)
     artifacts = []
     for a in obj["artifacts"]:
-        path = inside(base, a["path"])
+        path = inside(base, a.get("archive_path") or a["path"])
         exists = path.is_file()
         unchanged = exists and hash_file(path) == a.get("sha256")
         artifacts.append({"path": a["path"], "version": a["version"],
+                          "archive_path": a.get("archive_path"),
                           "exists": exists, "unchanged": unchanged,
                           "suggested_status": "vigente_verificada" if unchanged else
                               "no_aportada_ahora" if not exists else "desactualizada"})
@@ -297,6 +358,8 @@ def main():
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="action", required=True)
     p = sub.add_parser("init"); p.add_argument("folder"); p.add_argument("--id", default="SEUDONIMO_LOCAL")
+    p = sub.add_parser("begin-revision"); p.add_argument("folder"); p.add_argument("path")
+    p.add_argument("--old-version", required=True); p.add_argument("--reason", required=True)
     p = sub.add_parser("add-artifact"); p.add_argument("folder"); p.add_argument("path")
     p.add_argument("--kind", required=True, choices=KINDS); p.add_argument("--version", required=True)
     p = sub.add_parser("add-evidence"); p.add_argument("folder")
@@ -325,6 +388,8 @@ def main():
     base = Path(args.folder).expanduser()
     if args.action == "init":
         result = {"created": str(init_case(base, args.id))}
+    elif args.action == "begin-revision":
+        result = begin_revision(base, args.path, args.old_version, args.reason)
     elif args.action == "add-artifact":
         result = add_artifact(base, args.path, args.kind, args.version)
     elif args.action == "add-evidence":
