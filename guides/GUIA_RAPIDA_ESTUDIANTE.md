@@ -26,6 +26,14 @@ Si utilizas un **chat web sin acceso a archivos locales**, puedes adjuntar el do
 7. **Pide una evaluación cuando hayas avanzado.** Las notas son orientativas, no predicen tu calificación oficial y pueden cambiar si se detectan errores.
 8. **Protege la privacidad.** No publiques trabajos privados, información personal de terceros, datos restringidos o contraseñas. Consulta las normas UIB sobre autoría y uso de IA.
 
+## Organización común y reproducción obligatoria
+
+Aunque utilices únicamente un chat y **no permitas al agente acceder a tu ordenador**, conserva una carpeta `Mi_TFG` con las subcarpetas de propuesta, literatura, datos, análisis, manuscrito, evaluaciones y entrega. Puedes mantenerlas manualmente. No es necesario compartir toda esa carpeta con la IA.
+
+**Antes de la entrega final deberás reproducir tú mismo los resultados**, trabajando sobre una copia independiente y contrastando las cifras, tablas y figuras con el manuscrito. El tutor de la UIB solicitará un **ZIP con el PDF final y los archivos utilizados y necesarios**; no debes incluir todos los borradores o experimentos descartados. Nunca incorpores datos restringidos sin permiso.
+
+Consulta [la guía de reproducción y ZIP final](REPRODUCIBILIDAD_Y_ZIP_FINAL.md). La comprobación automática de un ZIP no equivale a reproducir el análisis.
+
 ## Hitos académicos importantes del curso 2026–27
 
 Según la guía interna del TFG de Economía UIB: E01 (dos preguntas), E02 (bibliografía y cinco lecturas comentadas), E03 (propuesta inicial y viabilidad), **E04 (propuesta aprobada académicamente el 21 de diciembre de 2026)** y después datos o modelo, análisis, manuscrito y entrega. La planificación de esta guía no sustituye los requisitos oficiales y las indicaciones del tutor.
