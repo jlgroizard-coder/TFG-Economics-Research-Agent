@@ -4,6 +4,14 @@
 
 Este proyecto ayuda a estudiantes del Grado en Economía de la Universitat de les Illes Balears a preparar investigaciones científicas rigurosas, comprender la literatura, mejorar propuestas y manuscritos y producir un paquete reproducible. Ofrece una **evaluación formativa**, nunca una nota oficial de la UIB.
 
+## Próximo rediseño: v0.3 centrada en el estudiante
+
+Estamos diseñando una experiencia conversacional basada en **un proyecto local privado**, sin exigir Git, terminal o comandos de versionado. El estudiante podrá solicitar por sí mismo evaluaciones formativas; la evaluación institucional corresponde exclusivamente al profesorado de la UIB. **La versión v0.3 todavía no está implementada.**
+
+- [Recorrido y organización del proyecto local](design/v0.3-recorrido-estudiante.md)
+- [Guía rápida y pautas de uso eficiente para estudiantes](guides/GUIA_RAPIDA_ESTUDIANTE.md)
+- [Pruebas previstas con diferentes perfiles tecnológicos](design/v0.3-pruebas-usabilidad.md)
+
 ## Instalación rápida
 
 **Claude Code:** clona o descarga el repositorio y abre su carpeta en Claude Code. Se leerá `CLAUDE.md` y estarán disponibles las skills de `.claude/skills/`.
