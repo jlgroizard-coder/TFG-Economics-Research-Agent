@@ -1,6 +1,6 @@
 # Tutor IA del TFG en Economía — UIB
 
-**Agente académico abierto · v0.2.2 · noviembre de 2026**
+**Agente académico abierto · v0.2.3 · noviembre de 2026**
 
 Este proyecto ayuda a estudiantes del Grado en Economía de la Universitat de les Illes Balears a preparar investigaciones científicas rigurosas, comprender la literatura, mejorar propuestas y manuscritos y producir un paquete reproducible. Ofrece una **evaluación formativa**, nunca una nota oficial de la UIB.
 
@@ -18,7 +18,7 @@ Este proyecto ayuda a estudiantes del Grado en Economía de la Universitat de le
 2. Pide ayuda para precisar dos preguntas económicas e identificar literatura.
 3. Completa los entregables E01–E14 de la guía, con propuesta aprobada antes de Navidad.
 4. Solicita `Evalúa mi TFG con rigor` y aporta los archivos pertinentes.
-5. Guarda cada informe y aplica sus tres mejoras prioritarias.
+5. Guarda cada informe y aplica sus tres mejoras prioritarias. **Antes de modificar un archivo ya registrado**, utiliza `begin-revision` para preservar la versión original; después registra la versión corregida y revalida su evidencia.
 6. Para entregar, prepara manuscrito, datos o instrucciones de acceso, programas, figuras, tablas y README de reproducción.
 
 El informe distingue **calidad científica** (total y por etapa), **reproducibilidad técnica** y **correspondencia manuscrito–resultados**: son tres indicadores independientes, no una media. Una nota de un criterio no desciende automáticamente porque su capítulo no venga en el último archivo: debe consultarse el expediente y comprobar su vigencia. **Sin acceso a evidencia esencial, la nota es provisional o no evaluable, no cero por defecto.**
@@ -32,7 +32,7 @@ El informe distingue **calidad científica** (total y por etapa), **reproducibil
 - `references/expediente-y-continuidad.md`: expediente privado y reglas de continuidad.
 - `references/indicadores-tecnicos.md`: dos escalas técnicas independientes.
 - `schemas/expediente.schema.json`: formato del expediente.
-- `scripts/expediente.py`: registro privado con estados efectivos por criterio, invalidación conservadora por cambios de investigación, hashes de informes y anulación de evaluaciones.
+- `scripts/expediente.py`: registro privado, historial de versiones con copias verificables, invalidación de evidencia afectada, hashes de informes y anulación de evaluaciones.
 - `scripts/test_expediente.py`: pruebas de regresión de continuidad y protección contra notas globales con archivos ausentes.
 - `scripts/audit_package.py`: comprobación estructural estática.
 - `scripts/test_audit.py`: pruebas del auditor.
