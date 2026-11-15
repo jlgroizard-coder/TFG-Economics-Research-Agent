@@ -3,7 +3,7 @@ import random
 import unittest
 from pathlib import Path
 from expediente import (init_case, add_artifact, add_evidence, add_decision,
-                        add_evaluation, revoke_evaluation, audit, open_case, migrate_legacy_reports)
+                        add_evaluation, revoke_evaluation, audit, open_case, migrate_legacy_reports, begin_revision)
 
 class ExpedienteTests(unittest.TestCase):
     def setUp(self):
@@ -181,6 +181,58 @@ class ExpedienteTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     add_evaluation(root,"trial","E09","expediente_completo",
                                    "evaluaciones/trial.md",3.8,3.8)
+
+    def test_legitimate_same_path_revision_cycle_and_full_grade(self):
+        # Simula el ciclo de un alumno: entrega, evaluación, corrección y reevaluación.
+        for c in "ABCDEFGH":
+            self.validated(c, "01_propuesta/"+c+".md")
+        self.file("evaluaciones/v2.md")
+        add_evaluation(self.root, "v2", "E09", "expediente_completo",
+                       "evaluaciones/v2.md",3.6,3.6)
+        outcome = begin_revision(self.root, "01_propuesta/B.md", "v2",
+                                 "Corrección de bibliografía según el informe")
+        self.assertTrue((self.root/outcome["archived_original"]).is_file())
+        self.assertEqual((self.root/outcome["archived_original"]).read_text(), "texto")
+        self.assertTrue(audit(self.root)["evaluation_reports"][0]["obsolete"])
+        self.file("01_propuesta/B.md", "Revisión mejorada")
+        with self.assertRaises(ValueError):
+            add_evaluation(self.root, "v3", "E09", "expediente_completo",
+                           "evaluaciones/v2.md",4.8,4.8)
+        add_artifact(self.root, "01_propuesta/B.md", "literatura", "v3")
+        add_evidence(self.root, "B", "vigente_verificada", "01_propuesta/B.md",
+                     "v3", "Tutor revisó el nuevo texto")
+        self.assertFalse(audit(self.root)["historic_integrity_problems"])
+        self.file("evaluaciones/v3.md", "Nueva evaluación")
+        res=add_evaluation(self.root, "v3", "E09", "expediente_completo",
+                           "evaluaciones/v3.md",4.8,4.8)
+        self.assertEqual(res["complete_score"],4.8)
+        history=[x for x in audit(self.root)["artifacts"] if x["path"]=="01_propuesta/B.md"]
+        self.assertEqual(len(history),2)
+        self.assertTrue(all(x["unchanged"] for x in history))
+
+    def test_revision_requires_intact_original(self):
+        self.validated("B", "02_literatura/revision.md")
+        self.file("02_literatura/revision.md", "Editado sin comenzar revisión")
+        with self.assertRaisesRegex(ValueError, "restáuralo"):
+            begin_revision(self.root, "02_literatura/revision.md","v2","cambio")
+
+    def test_archived_snapshot_tampering_blocks_grade(self):
+        for c in "ABCDEFGH":
+            self.validated(c, "01_propuesta/"+c+".md")
+        item=begin_revision(self.root,"01_propuesta/B.md","v2","Nueva edición")
+        self.file("01_propuesta/B.md","texto nuevo")
+        add_artifact(self.root,"01_propuesta/B.md","literatura","v3")
+        add_evidence(self.root,"B","vigente_verificada","01_propuesta/B.md","v3","revisado")
+        self.file(item["archived_original"],"archivado falsificado")
+        self.file("evaluaciones/v3.md","evaluación")
+        with self.assertRaises(ValueError):
+            add_evaluation(self.root,"v3","E09","expediente_completo",
+                           "evaluaciones/v3.md",5.0,5.0)
+
+    def test_cannot_register_two_active_versions_without_revision(self):
+        self.validated("B","02_literatura/revision.md")
+        with self.assertRaisesRegex(ValueError,"begin-revision"):
+            add_artifact(self.root,"02_literatura/revision.md","literatura","v3")
 
     def test_nan_scores_rejected(self):
         self.file("evaluaciones/v3.md")
