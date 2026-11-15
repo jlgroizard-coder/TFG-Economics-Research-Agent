@@ -38,3 +38,7 @@ Nunca publiques trabajos, datos de estudiantes ni credenciales en el repositorio
 
 ## Finalización
 Entregables finales: TFG formalmente conforme a UIB, paquete reproducible, README, registro de versiones e informe formativo. Evaluación y autorización finales son humanas.
+
+## Edición de documentos registrados (v0.2.3)
+
+Si el estudiante va a modificar un archivo ya registrado en el expediente, indícale **antes de editar** que ejecute `begin-revision`. Este comando preserva un original comprobable bajo `00_admin/historial/`. Tras la modificación, registrar un artefacto de versión nueva y revalidar los criterios pertinentes. No cambiar hashes antiguos ni estados para eludir un bloqueo; no presentar la revalidación mecánica como revisión científica humana. Consultar `references/expediente-y-continuidad.md`.
