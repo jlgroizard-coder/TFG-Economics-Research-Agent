@@ -77,6 +77,15 @@
           },
           "checked_at": {
             "type": "string"
+          },
+          "archive_path": {
+            "type": "string"
+          },
+          "archived_at": {
+            "type": "string"
+          },
+          "archive_reason": {
+            "type": "string"
           }
         }
       }
