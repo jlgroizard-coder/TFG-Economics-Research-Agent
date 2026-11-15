@@ -51,7 +51,7 @@ Las propuestas deben ser aprobadas académicamente por tu profesor.
 - 06_evaluaciones: informes que podrás volver a leer
 - 07_entrega: documentos finales
 
-La carpeta oculta .tfg contiene versiones entregadas, instrucciones del tutor
+En la entrega final, prepara un ZIP con **solo el PDF definitivo y los archivos que realmente sustentan** las cifras, tablas, figuras y conclusiones.\n**Debes probar personalmente la reproducción** desde una copia independiente; el tutor IA puede ayudarte a comprobar el ZIP, pero no sustituye tu prueba.\nConsulta 07_entrega/README_REPRODUCCION.md y la guía de reproducción.\n\nLa carpeta oculta .tfg contiene versiones entregadas, instrucciones del tutor
 y registros técnicos; **no hace falta modificarla**.
 
 ## Próximo paso
@@ -82,7 +82,7 @@ captúralo con: python3 .tfg/tools/student_project.py submit . RUTA_RELATIVA
 No edites el documento original al capturarlo ni lo sobrescribas sin permiso.
 Si no hay acceso local, di que no se puede guardar automáticamente.
 No uses begin-revision ni scripts/expediente.py para las entregas sencillas.
-No presupongas que una entrega fue verificada científicamente solo porque
+Al llegar a la entrega final, muestra al estudiante 07_entrega/ARCHIVOS_INCLUIDOS.txt y\n07_entrega/README_REPRODUCCION.md. El estudiante realiza personalmente la\nreproducción desde una carpeta limpia. Puedes ejecutar internamente\npython3 .tfg/tools/repro_package.py check . y build . RUTA_ZIP_EXTERNA\nsolo tras revisar su lista y con permiso. Esto no ejecuta resultados ni certifica\nla prueba. Incluye únicamente los archivos utilizados, nunca .tfg o informes\nformativos, salvo instrucciones específicas del docente.\nNo presupongas que una entrega fue verificada científicamente solo porque
 su copia se guardó con hash. Lee la evidencia real y explica límites.
 """
 
@@ -139,6 +139,10 @@ def init(root):
     (private / "agent" / "references").mkdir(parents=True, exist_ok=True)
     (private / "tools").mkdir(exist_ok=True)
     shutil.copy2(Path(__file__).resolve(), private / "tools" / "student_project.py")
+    # El estudiante prepara por sí mismo la prueba de reproducción.
+    # El agente solo facilita el empaquetado selectivo del ZIP final.
+    shutil.copy2(source / "scripts" / "repro_package.py",
+                 private / "tools" / "repro_package.py")
     for name in ("instructions-portable.md",):
         shutil.copy2(source / name, private / "agent" / name)
     for name in ("rubrica.md", "protocolo-evaluacion.md", "guia-tfg-uib-2026-27.md",
@@ -158,6 +162,34 @@ def init(root):
                "## Pregunta 2\n\n- Pregunta:\n- Relevancia económica:\n"
                "- Mecanismo esperado:\n- Datos o fuentes posibles:\n\n"
                "## Pregunta que prefiero y por qué\n\n")
+    write_text(root / "07_entrega" / "README_REPRODUCCION.md",
+               "# Reproducción del TFG — completar por el estudiante\\n\\n"
+               "## Trabajo y modalidad\\n\\n[Empírico / teórico / revisión crítica]\\n\\n"
+               "## Archivos que sustentan los resultados\\n\\n"
+               "Indica qué archivos son indispensables y qué tablas o figuras generan.\\n\\n"
+               "## Fuentes y restricciones\\n\\n"
+               "Describe origen, fecha, permisos y acceso a los datos utilizados.\\n\\n"
+               "## Software y entorno\\n\\nIndica programas y versiones.\\n\\n"
+               "## Instrucciones paso a paso\\n\\n"
+               "Enumera los pasos de reproducción desde una carpeta independiente.\\n\\n"
+               "## Prueba realizada autónomamente\\n\\n"
+               "- Fecha:\\n- Pasos ejecutados:\\n- Resultados comparados con el texto:\\n"
+               "- Reproducción completa / parcial / no conseguida:\\n"
+               "- Diferencias y restricciones:\\n")
+    write_text(root / "07_entrega" / "ARCHIVOS_INCLUIDOS.txt",
+               "# Una ruta RELATIVA por línea. Añade solo ficheros que sustentan el TFG.\\n"
+               "# Ejemplo: 03_datos/datos_finales.csv\\n"
+               "# Ejemplo: 04_analisis/analisis_final.py\\n"
+               "# Ejemplo: 07_entrega/TFG_final.pdf\\n"
+               "07_entrega/README_REPRODUCCION.md\\n")
+    write_text(root / "07_entrega" / "INSTRUCCIONES_ZIP.md",
+               "# ZIP final\\n\\n"
+               "Debes hacer tú la prueba de reproducción siguiendo "
+               "la guía del tutor. El ZIP no incluye borradores descartados, "
+               "historial privado ni evaluaciones del agente.\\n"
+               "Pide al Tutor IA: «Comprueba mi paquete final y prepara el ZIP "
+               "con los archivos incluidos». El programa solo valida archivos "
+               "y NO ejecuta ni certifica el análisis.\\n")
     write_text(private / "registro.json",
                json.dumps({"version": "0.3-mvp", "created_at": utcnow(),
                            "submissions": []}, ensure_ascii=False, indent=2) + "\n")
