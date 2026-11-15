@@ -1,63 +1,115 @@
-import json
 import tempfile
 import unittest
 from pathlib import Path
-from expediente import init_case, add_artifact, evidence, audit, open_case, add_evaluation
+from expediente import (init_case, add_artifact, add_evidence, add_decision,
+                        add_evaluation, revoke_evaluation, audit, open_case)
 
 class ExpedienteTests(unittest.TestCase):
-    def test_init_is_private_and_does_not_overwrite(self):
-        with tempfile.TemporaryDirectory() as d:
-            root=Path(d)/"private"
-            init_case(root,"SINTETICO")
-            self.assertEqual(open_case(root)["schema_version"],"0.2")
-            self.assertTrue((root/"evaluaciones").is_dir())
-            with self.assertRaises(ValueError):
-                init_case(root,"OTHER")
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name) / "case"
+        init_case(self.root, "SINTETICO")
 
-    def test_versioned_evidence_not_discarded(self):
-        with tempfile.TemporaryDirectory() as d:
-            root=Path(d)/"case"
-            init_case(root,"SINTETICO")
-            path=root/"02_literatura"/"revision.md"
-            path.write_text("Texto original de literatura.",encoding="utf-8")
-            add_artifact(root,"02_literatura/revision.md","literatura","v2")
-            evidence(root,"B","vigente_verificada","02_literatura/revision.md","v2","Leído")
-            # Nueva versión del capítulo de resultados: literatura sigue existiendo y no desaparece.
-            (root/"06_resultados"/"tabla.csv").write_text("col\n1\n",encoding="utf-8")
-            add_artifact(root,"06_resultados/tabla.csv","resultados","v3")
-            self.assertEqual(len(open_case(root)["evidence"]),1)
-            self.assertTrue(all(x["unchanged"] for x in audit(root)["artifacts"]))
+    def file(self, rel, content="texto"):
+        path = self.root / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(content, encoding="utf-8")
+        return path
 
-    def test_modification_is_detected_but_not_automatically_graded(self):
-        with tempfile.TemporaryDirectory() as d:
-            root=Path(d)/"case"
-            init_case(root,"SINTETICO")
-            path=root/"01_propuesta"/"v1.md"
-            path.write_text("a",encoding="utf-8")
-            add_artifact(root,"01_propuesta/v1.md","propuesta","v1")
-            path.write_text("b",encoding="utf-8")
-            self.assertFalse(audit(root)["artifacts"][0]["unchanged"])
-            self.assertIn("NO demuestra",audit(root)["warning"])
+    def validated(self, criterion, rel, version="v2"):
+        self.file(rel)
+        add_artifact(self.root, rel, "literatura", version)
+        add_evidence(self.root, criterion, "vigente_verificada", rel, version, "Comprobado")
 
-    def test_provisional_evaluation_does_not_invent_global_score(self):
-        with tempfile.TemporaryDirectory() as d:
-            root=Path(d)/"case"
-            init_case(root,"SINTETICO")
-            report=root/"evaluaciones"/"v3.md"
-            report.write_text("Evaluación de capítulo",encoding="utf-8")
-            with self.assertRaises(ValueError):
-                add_evaluation(root,"v3","E09","parcial","evaluaciones/v3.md",complete=3.5)
-            row=add_evaluation(root,"v3","E09","parcial","evaluaciones/v3.md",
-                               technical=9.0,consistency=2.0)
-            self.assertIsNone(row["complete_score"])
-            self.assertEqual(len(open_case(root)["evaluations"]),1)
+    def test_init_no_overwrite(self):
+        with self.assertRaises(ValueError):
+            init_case(self.root, "OTHER")
 
-    def test_block_path_traversal(self):
-        with tempfile.TemporaryDirectory() as d:
-            root=Path(d)/"case"
-            init_case(root,"SINTETICO")
-            with self.assertRaises(ValueError):
-                evidence(root,"A","pendiente","../../secret.txt","v1","no")
+    def test_continuity(self):
+        self.validated("B", "02_literatura/revision.md")
+        self.file("06_resultados/v3.csv", "x\n1\n")
+        add_artifact(self.root, "06_resultados/v3.csv", "resultados", "v3")
+        items = audit(self.root)["effective_evidence"]
+        self.assertEqual(items[0]["status"], "vigente_verificada")
+
+    def test_missing_file_blocks_complete_evaluation(self):
+        for criterion in "ABCDEFGH":
+            self.validated(criterion, "01_propuesta/"+criterion+".md")
+        report = self.file("evaluaciones/v3.md")
+        (self.root/"01_propuesta/B.md").rename(self.root/"01_propuesta/B-quarantine.md")
+        with self.assertRaisesRegex(ValueError, "inaccesible"):
+            add_evaluation(self.root, "v3", "E09", "expediente_completo",
+                           "evaluaciones/v3.md", 3.8, 3.8)
+        self.assertEqual(len(open_case(self.root)["evaluations"]), 0)
+        self.assertEqual(
+            [r for r in audit(self.root)["effective_evidence"] if r["criterion"]=="B"][0]["status"],
+            "no_aportada_ahora")
+
+    def test_modified_file_needs_revalidation(self):
+        self.validated("B", "02_literatura/lit.md")
+        self.file("02_literatura/lit.md", "modificado")
+        self.assertEqual(audit(self.root)["effective_evidence"][0]["status"], "desactualizada")
+
+    def test_new_decision_invalidates_dependent_items(self):
+        self.validated("B", "02_literatura/lit.md")
+        self.validated("D", "01_propuesta/met.md")
+        res = add_decision(self.root, "metodo", "Cambio a panel")
+        statuses = {x["criterion"]: x["status"] for x in audit(self.root)["effective_evidence"]}
+        self.assertEqual(statuses["B"], "vigente_verificada")
+        self.assertEqual(statuses["D"], "desactualizada")
+        self.assertIn("D", res["decision"]["affected_criteria"])
+
+    def test_question_invalidates_old_evidence(self):
+        self.validated("A", "01_propuesta/question.md")
+        add_decision(self.root, "pregunta", "Nuevas regiones", "Pregunta nueva")
+        self.assertEqual(open_case(self.root)["research_question"], "Pregunta nueva")
+        self.assertEqual(audit(self.root)["effective_evidence"][0]["status"], "desactualizada")
+
+    def test_latest_status_not_historical_count(self):
+        self.validated("B", "02_literatura/lit.md")
+        add_evidence(self.root, "B", "pendiente", "02_literatura/lit.md", "v3", "Por revisar")
+        counts = audit(self.root)["effective_status_counts"]
+        self.assertEqual(counts["vigente_verificada"],0)
+        self.assertEqual(counts["pendiente"],1)
+
+    def test_report_integrity_and_revocation(self):
+        for criterion in "ABCDEFGH":
+            self.validated(criterion, "01_propuesta/"+criterion+".md")
+        report = self.file("evaluaciones/v3.md")
+        add_evaluation(self.root, "v3", "E09", "expediente_completo",
+                       "evaluaciones/v3.md", 3.8,3.8)
+        report.write_text("informe manipulado",encoding="utf-8")
+        self.assertFalse(audit(self.root)["evaluation_reports"][0]["intact"])
+        revoke_evaluation(self.root, "v3", "evaluaciones/v3.md", "Informe corregido")
+        self.assertTrue(audit(self.root)["evaluation_reports"][0]["revoked"])
+
+    def test_partial_cannot_record_global_score(self):
+        self.file("evaluaciones/v3.md")
+        with self.assertRaises(ValueError):
+            add_evaluation(self.root, "v3", "E09", "parcial",
+                           "evaluaciones/v3.md", complete=3.8)
+        entry = add_evaluation(self.root, "v3", "E09", "parcial",
+                               "evaluaciones/v3.md",technical=7.5, consistency=2.0)
+        self.assertIsNone(entry["complete_score"])
+
+    def test_empty_evidence_blocks_global_grade(self):
+        self.file("evaluaciones/v3.md")
+        with self.assertRaisesRegex(ValueError, "sin evidencia"):
+            add_evaluation(self.root,"v3","E09","expediente_completo",
+                           "evaluaciones/v3.md",3.8,3.8)
+
+    def test_path_escape(self):
+        with self.assertRaises(ValueError):
+            add_evidence(self.root, "A", "pendiente", "../outside", "v1", "x")
+        with self.assertRaises(ValueError):
+            add_evidence(self.root, "A", "pendiente", "/tmp/outside", "v1", "x")
+
+    def test_nan_scores_rejected(self):
+        self.file("evaluaciones/v3.md")
+        with self.assertRaises(ValueError):
+            add_evaluation(self.root,"v3","E09","parcial",
+                           "evaluaciones/v3.md",technical=float("nan"))
 
 if __name__=="__main__":
     unittest.main()

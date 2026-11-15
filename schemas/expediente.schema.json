@@ -193,6 +193,59 @@
             ],
             "minimum": 0,
             "maximum": 10
+          },
+          "report_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "recorded_at": {
+            "type": "string"
+          },
+          "revoked_at": {
+            "type": "string"
+          },
+          "revoke_reason": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "change",
+          "detail",
+          "affected_criteria",
+          "time"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "change": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "affected_criteria": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "A",
+                "B",
+                "C",
+                "D",
+                "E",
+                "F",
+                "G",
+                "H"
+              ]
+            }
+          },
+          "time": {
+            "type": "string"
           }
         }
       }

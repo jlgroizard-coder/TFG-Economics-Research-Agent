@@ -1,6 +1,6 @@
 # Tutor IA del TFG en Economía — UIB
 
-**Agente académico abierto · v0.2.0 · noviembre de 2026**
+**Agente académico abierto · v0.2.1 · noviembre de 2026**
 
 Este proyecto ayuda a estudiantes del Grado en Economía de la Universitat de les Illes Balears a preparar investigaciones científicas rigurosas, comprender la literatura, mejorar propuestas y manuscritos y producir un paquete reproducible. Ofrece una **evaluación formativa**, nunca una nota oficial de la UIB.
 
@@ -32,7 +32,8 @@ El informe distingue **calidad científica** (total y por etapa), **reproducibil
 - `references/expediente-y-continuidad.md`: expediente privado y reglas de continuidad.
 - `references/indicadores-tecnicos.md`: dos escalas técnicas independientes.
 - `schemas/expediente.schema.json`: formato del expediente.
-- `scripts/expediente.py`: inicialización, auditoría y registro local de evidencias.
+- `scripts/expediente.py`: registro privado con estados efectivos por criterio, invalidación conservadora por cambios de investigación, hashes de informes y anulación de evaluaciones.
+- `scripts/test_expediente.py`: pruebas de regresión de continuidad y protección contra notas globales con archivos ausentes.
 - `scripts/audit_package.py`: comprobación estructural estática.
 - `scripts/test_audit.py`: pruebas del auditor.
 
