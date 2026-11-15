@@ -57,3 +57,27 @@ Una presentación parcial puede mostrar `19,0 puntos observados de 55 puntos eva
 - Nuevas decisiones, artefactos o evidencias marcan las notas globales existentes como **obsoletas** sin borrarlas ni revocarlas retrospectivamente.
 - `migrate-legacy --reason "..."` establece una **línea de base actual** para informes antiguos sin huella; NO certifica su integridad histórica.
 - La revalidación científica no se puede certificar mecánicamente: el tutor debe revisar las evidencias, la correspondencia con la pregunta y las calificaciones antes de comunicarlas.
+
+## Flujo de corrección de archivos en su misma ruta (v0.2.3)
+
+**Antes de que el estudiante edite un documento registrado**, ejecutar:
+
+```bash
+python3 scripts/expediente.py begin-revision RUTA_EXPEDIENTE 02_literatura/revision.md --old-version v2 --reason "Revisión bibliográfica tras evaluación"
+```
+
+El programa guarda una **copia de la versión original cuyo SHA-256 coincide con el registro** dentro de `00_admin/historial/`; marca su evaluación anterior como obsoleta y la evidencia afectada como pendiente de revalidación. La copia histórica sigue disponible en el expediente privado y es auditada por su huella.
+
+Después, el estudiante **puede editar el mismo archivo** `02_literatura/revision.md`. Una vez comprobado su contenido, registrar la nueva versión y la nueva evidencia:
+
+```bash
+python3 scripts/expediente.py add-artifact RUTA_EXPEDIENTE 02_literatura/revision.md --kind literatura --version v3
+python3 scripts/expediente.py add-evidence RUTA_EXPEDIENTE --criterion B --status vigente_verificada --path 02_literatura/revision.md --version v3 --note "Lectura y referencias verificadas por el evaluador"
+python3 scripts/expediente.py audit RUTA_EXPEDIENTE
+```
+
+Solo entonces se puede registrar una nueva nota global, **si todas las demás evidencias relevantes están vigentes**. Un estado `vigente_verificada` escrito por el agente no constituye por sí mismo una comprobación académica humana.
+
+**Si el original ya ha sido sobrescrito sin `begin-revision`:** el programa debe rechazar el procedimiento; recuperar el original de una copia de seguridad/versionado y comenzar de forma normal. Nunca reemplazar el hash histórico sin esa copia.
+
+Este mecanismo mejora el uso cotidiano pero **no es una prueba criptográfica frente a quien puede editar manualmente todo el expediente** (`expediente.json` y sus copias). La revisión de calificaciones por el tutor humano sigue siendo imprescindible.
