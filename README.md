@@ -12,6 +12,15 @@ Estamos diseñando una experiencia conversacional basada en **un proyecto local 
 - [Guía rápida y pautas de uso eficiente para estudiantes](guides/GUIA_RAPIDA_ESTUDIANTE.md)
 - [Pruebas previstas con diferentes perfiles tecnológicos](design/v0.3-pruebas-usabilidad.md)
 
+## Estructura común y entrega final reproducible
+
+**Todos los estudiantes**, también quienes usan solo chat con archivos adjuntos, mantienen una estructura común de carpetas en su ordenador o almacenamiento elegido. La IA puede ayudarles a organizarla, pero no requiere acceso a carpetas privadas. El estudiante debe **realizar autónomamente la prueba de reproducción** desde una copia independiente del proyecto.
+
+El tutor de la UIB solicitará al final **un ZIP con el manuscrito definitivo y los archivos necesarios para obtener los resultados efectivamente utilizados**; no se exige aportar borradores descartados, intentos exploratorios ni el historial privado. El ZIP del tutor **no sustituye** el depósito oficial del PDF ni debe contener datos restringidos sin autorización.
+
+- [Guía de prueba autónoma y ZIP final](guides/REPRODUCIBILIDAD_Y_ZIP_FINAL.md)
+- `scripts/repro_package.py`: comprobación de lista y creación opcional de ZIP **sin ejecutar ni certificar resultados**.
+
 ## Instalación rápida
 
 **Claude Code:** clona o descarga el repositorio y abre su carpeta en Claude Code. Se leerá `CLAUDE.md` y estarán disponibles las skills de `.claude/skills/`.
