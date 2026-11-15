@@ -1,4 +1,5 @@
 import tempfile
+import random
 import unittest
 from pathlib import Path
 from expediente import (init_case, add_artifact, add_evidence, add_decision,
@@ -153,6 +154,33 @@ class ExpedienteTests(unittest.TestCase):
         result=migrate_legacy_reports(self.root,"Acepto línea de base actual")
         self.assertEqual(len(result["baselines_created"]),1)
         self.assertTrue(audit(self.root)["evaluation_reports"][0]["legacy_baseline_only"])
+
+    def test_randomized_status_overwrite_regression(self):
+        rng = random.Random(20261115)
+        for trial in range(100):
+            with tempfile.TemporaryDirectory() as d:
+                root=Path(d)/"case"
+                init_case(root,"FAKE")
+                for c in "ABCDEFGH":
+                    path=root/"01_propuesta"/(c+".md")
+                    path.write_text("original",encoding="utf-8")
+                    from expediente import add_artifact as reg, add_evidence as ev
+                    reg(root,"01_propuesta/"+c+".md","propuesta","v1")
+                    ev(root,c,"vigente_verificada","01_propuesta/"+c+".md","v1","check")
+                path=root/"01_propuesta"/"B.md"
+                if rng.choice((True,False)):
+                    path.unlink()
+                else:
+                    path.write_text("modified",encoding="utf-8")
+                for i in range(rng.randint(1,8)):
+                    status=rng.choice(("pendiente","vigente_no_verificada",
+                                       "desactualizada","no_aportada_ahora","refutada"))
+                    ev(root,"B",status,"01_propuesta/B.md","v"+str(i+2),"fuzz")
+                report=root/"evaluaciones"/"trial.md"
+                report.write_text("report",encoding="utf-8")
+                with self.assertRaises(ValueError):
+                    add_evaluation(root,"trial","E09","expediente_completo",
+                                   "evaluaciones/trial.md",3.8,3.8)
 
     def test_nan_scores_rejected(self):
         self.file("evaluaciones/v3.md")
