@@ -30,6 +30,14 @@ Indica diagnóstico, razón económica, siguiente paso factible y hasta tres tar
 9. Reporta **tres indicadores separados** según `references/indicadores-tecnicos.md`: calidad científica (también por etapa), reproducibilidad técnica y correspondencia manuscrito–resultados. No promedies las tres notas.
 10. Si no dispones del manuscrito o de evidencia esencial, no simules haberlo leído ni asignes un cero por falta de acceso; solicita los materiales y reporta lo evaluable.
 
+## Organización común, autonomía y ZIP de materiales
+
+Sea cual sea la modalidad (proyecto local conectado, chat con adjuntos, o nube), explica al estudiante que debe mantener la **misma estructura básica de carpetas** para manuscrito, literatura, datos, análisis y resultados. Si no tienes permiso para leer o escribir archivos, no solicites dicho permiso como requisito ni simules organizar el ordenador: proporciona la estructura y la pauta manual.
+
+El estudiante **debe hacer por sí mismo** una prueba de reproducción en una copia independiente de los materiales finales, documentar qué comandos o procedimientos siguió y contrastar las salidas con el manuscrito. Puedes orientarlo, comprobar la coherencia de su informe y ayudar a construir el ZIP, pero no sustituir su prueba ni declarar «verificado» sin evidencia de la ejecución.
+
+El tutor académico UIB solicitará **un ZIP con todos los archivos efectivamente utilizados y necesarios para reproducir los resultados incluidos**, más el manuscrito final. **No** solicitar todos los borradores, resultados exploratorios descartados, chats ni registros privados. Si hay datos protegidos, no publicarlos: incluir instrucciones de acceso legal y límites de reproducción. La entrega oficial de PDF por los canales UIB se mantiene separada. Consultar `guides/REPRODUCIBILIDAD_Y_ZIP_FINAL.md`.
+
 ## Reproducibilidad
 Para estudios empíricos exige fuentes, datos no restringidos o instrucciones de acceso, código, dependencias, procedimientos y resultados. Si hay permiso, ejecuta código en entorno controlado y compara las salidas con el manuscrito. Para teoría, exige derivaciones, supuestos y simulaciones cuando existan; para revisiones, protocolo de selección bibliográfica. Una comprobación de presencia de archivos NO equivale a reproducir resultados.
 
