@@ -163,33 +163,33 @@ def init(root):
                "- Mecanismo esperado:\n- Datos o fuentes posibles:\n\n"
                "## Pregunta que prefiero y por qué\n\n")
     write_text(root / "07_entrega" / "README_REPRODUCCION.md",
-               "# Reproducción del TFG — completar por el estudiante\\n\\n"
-               "## Trabajo y modalidad\\n\\n[Empírico / teórico / revisión crítica]\\n\\n"
-               "## Archivos que sustentan los resultados\\n\\n"
-               "Indica qué archivos son indispensables y qué tablas o figuras generan.\\n\\n"
-               "## Fuentes y restricciones\\n\\n"
-               "Describe origen, fecha, permisos y acceso a los datos utilizados.\\n\\n"
-               "## Software y entorno\\n\\nIndica programas y versiones.\\n\\n"
-               "## Instrucciones paso a paso\\n\\n"
-               "Enumera los pasos de reproducción desde una carpeta independiente.\\n\\n"
-               "## Prueba realizada autónomamente\\n\\n"
-               "- Fecha:\\n- Pasos ejecutados:\\n- Resultados comparados con el texto:\\n"
-               "- Reproducción completa / parcial / no conseguida:\\n"
-               "- Diferencias y restricciones:\\n")
+               "# Reproducción del TFG — completar por el estudiante\n\n"
+               "## Trabajo y modalidad\n\n[Empírico / teórico / revisión crítica]\n\n"
+               "## Archivos que sustentan los resultados\n\n"
+               "Indica qué archivos son indispensables y qué tablas o figuras generan.\n\n"
+               "## Fuentes y restricciones\n\n"
+               "Describe origen, fecha, permisos y acceso a los datos utilizados.\n\n"
+               "## Software y entorno\n\nIndica programas y versiones.\n\n"
+               "## Instrucciones paso a paso\n\n"
+               "Enumera los pasos de reproducción desde una carpeta independiente.\n\n"
+               "## Prueba realizada autónomamente\n\n"
+               "- Fecha:\n- Pasos ejecutados:\n- Resultados comparados con el texto:\n"
+               "- Reproducción completa / parcial / no conseguida:\n"
+               "- Diferencias y restricciones:\n")
     write_text(root / "07_entrega" / "ARCHIVOS_INCLUIDOS.txt",
-               "# Una ruta RELATIVA por línea. Añade solo ficheros que sustentan el TFG.\\n"
-               "# Ejemplo: 03_datos/datos_finales.csv\\n"
-               "# Ejemplo: 04_analisis/analisis_final.py\\n"
-               "# Ejemplo: 07_entrega/TFG_final.pdf\\n"
-               "07_entrega/README_REPRODUCCION.md\\n")
+               "# Una ruta RELATIVA por línea. Añade solo ficheros que sustentan el TFG.\n"
+               "# Ejemplo: 03_datos/datos_finales.csv\n"
+               "# Ejemplo: 04_analisis/analisis_final.py\n"
+               "# Ejemplo: 07_entrega/TFG_final.pdf\n"
+               "07_entrega/README_REPRODUCCION.md\n")
     write_text(root / "07_entrega" / "INSTRUCCIONES_ZIP.md",
-               "# ZIP final\\n\\n"
+               "# ZIP final\n\n"
                "Debes hacer tú la prueba de reproducción siguiendo "
                "la guía del tutor. El ZIP no incluye borradores descartados, "
-               "historial privado ni evaluaciones del agente.\\n"
+               "historial privado ni evaluaciones del agente.\n"
                "Pide al Tutor IA: «Comprueba mi paquete final y prepara el ZIP "
                "con los archivos incluidos». El programa solo valida archivos "
-               "y NO ejecuta ni certifica el análisis.\\n")
+               "y NO ejecuta ni certifica el análisis.\n")
     write_text(private / "registro.json",
                json.dumps({"version": "0.3-mvp", "created_at": utcnow(),
                            "submissions": []}, ensure_ascii=False, indent=2) + "\n")
