@@ -11,6 +11,8 @@ Estamos diseñando una experiencia conversacional basada en **un proyecto local 
 - [Recorrido y organización del proyecto local](design/v0.3-recorrido-estudiante.md)
 - [Guía rápida y pautas de uso eficiente para estudiantes](guides/GUIA_RAPIDA_ESTUDIANTE.md)
 - [Pruebas previstas con diferentes perfiles tecnológicos](design/v0.3-pruebas-usabilidad.md)
+- [Prueba independiente de reproducción y ZIP para tres perfiles](tests/PRUEBA_USABILIDAD_REPRODUCCION_V03.md)
+- `scripts/test_ux_reproduction.py`: cuatro simulaciones técnicas con ZIP extraído y cálculo reproducido desde una carpeta independiente (**no** es una prueba real con estudiantes).
 
 ## Estructura común y entrega final reproducible
 
