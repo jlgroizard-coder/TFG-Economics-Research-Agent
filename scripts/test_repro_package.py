@@ -58,6 +58,24 @@ class ReproducibilityZipTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             p.build(self.root,out)
 
+    def test_sensitive_and_discarded_filenames_rejected(self):
+        names=("03_datos/datos_restringidos.csv","03_datos/exploratorio_descartado.csv",
+               "04_analisis/api_key.txt","07_entrega/credenciales.txt","03_datos/clave.pem")
+        for name in names:
+            pth=self.root/name
+            pth.parent.mkdir(parents=True,exist_ok=True)
+            pth.write_text("contenido de prueba")
+            self.manifest.write_text("07_entrega/TFG_final.pdf\n"
+                                     "07_entrega/README_REPRODUCCION.md\n"+name+"\n")
+            with self.assertRaisesRegex(ValueError,"privados"):
+                p.check(self.root)
+
+    def test_excluded_candidates_are_visible(self):
+        (self.root/"03_datos"/"exploratorio_descartado.csv").write_text("x")
+        result=p.check(self.root)
+        self.assertIn("03_datos/exploratorio_descartado.csv",result["excluded_candidates"])
+        self.assertIn("no asegura",result["warning"])
+
     def test_symlink_rejected(self):
         outside=Path(self.tmp.name)/"private.txt"
         outside.write_text("secret")
