@@ -10,11 +10,19 @@ import json
 import shutil
 import tempfile
 import zipfile
+import re
 from pathlib import Path
 
 MANIFEST = "07_entrega/ARCHIVOS_INCLUIDOS.txt"
 README = "07_entrega/README_REPRODUCCION.md"
 DISALLOWED = {".tfg", "06_evaluaciones", "__pycache__", ".git"}
+# Patrón prudente, orientado a nombres; no sustituye revisión manual del contenido.
+SENSITIVE_PARTS = {"credenciales", "credentials", "secret", "secrets", "password",
+                   "passwords", "token", "tokens", "api_key", "apikey",
+                   "private", "privado", "confidential", "confidencial",
+                   "restringido", "restricted", "descartado", "discarded",
+                   "backup", "backups", "borrador", "draft", "old"}
+SECRET_EXTENSIONS = {".pem", ".key", ".p12", ".pfx"}
 MAX_FILES = 2000
 MAX_BYTES = 2_000_000_000
 
@@ -40,6 +48,12 @@ def entries(root):
             raise ValueError(f"Ruta no permitida: {name}")
         if any(part in DISALLOWED or part.startswith(".") for part in relative.parts):
             raise ValueError(f"No incluir carpetas privadas, ocultas o históricas: {name}")
+        fragments = [part.lower() for part in relative.parts]
+        lexical = set()
+        for part in fragments:
+            lexical.update(x for x in re.split(r"[^a-z0-9áéíóúñ]+", part) if x)
+        if lexical & SENSITIVE_PARTS or relative.suffix.lower() in SECRET_EXTENSIONS:
+            raise ValueError(f"Posibles datos privados, descartados o credenciales: {name}")
         path = root / relative
         if path.is_symlink() or not path.resolve().is_relative_to(root):
             raise ValueError(f"Enlace o salida de la carpeta: {name}")
@@ -62,7 +76,18 @@ def check(root):
     paths = entries(root)
     files = [{"path": name, "sha256": sha256(root / name),
               "size_bytes": (root / name).stat().st_size} for name in paths]
+    excluded = []
+    for directory in ("03_datos", "04_analisis", "05_manuscrito", "07_entrega"):
+        folder = root / directory
+        if folder.is_dir():
+            excluded.extend(str(p.relative_to(root)) for p in folder.rglob("*")
+                            if p.is_file() and not p.is_symlink()
+                            and str(p.relative_to(root)) not in paths)
     return {"files": files, "total_files": len(files),
+            "excluded_candidates": sorted(excluded)[:100],
+            "excluded_candidates_truncated": len(excluded) > 100,
+            "warning": "Revise manualmente datos restringidos, credenciales y dependencias omitidas. "
+                       "Esta lista no asegura que todos los archivos necesarios estén incluidos.",
             "message": "Validación estructural; NO se han reproducido resultados."}
 
 def build(root, output):
