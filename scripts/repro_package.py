@@ -52,7 +52,8 @@ def entries(root):
         lexical = set()
         for part in fragments:
             lexical.update(x for x in re.split(r"[^a-z0-9áéíóúñ]+", part) if x)
-        if lexical & SENSITIVE_PARTS or relative.suffix.lower() in SECRET_EXTENSIONS:
+        if (lexical & SENSITIVE_PARTS or {"api", "key"}.issubset(lexical)
+                or relative.suffix.lower() in SECRET_EXTENSIONS):
             raise ValueError(f"Posibles datos privados, descartados o credenciales: {name}")
         path = root / relative
         if path.is_symlink() or not path.resolve().is_relative_to(root):
