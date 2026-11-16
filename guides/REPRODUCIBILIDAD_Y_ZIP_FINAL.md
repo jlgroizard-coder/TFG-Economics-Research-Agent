@@ -44,6 +44,6 @@ Nunca compartas información protegida o sin autorización. Si no puedes adjunta
 
 ## Herramienta de ayuda (opcional)
 
-Si el agente tiene permiso de lectura de tu proyecto, puede comprobar la lista de archivos y crear el ZIP con `scripts/repro_package.py`. **Eso solo verifica la estructura e integridad del archivo comprimido; no realiza ni sustituye la reproducción académica que debes ejecutar tú mismo.** Si trabajas únicamente mediante chat, puedes preparar el ZIP manualmente con el explorador de archivos y utilizar exactamente esta lista de comprobación.
+Si el agente tiene permiso de lectura de tu proyecto, puede comprobar la lista de archivos y crear el ZIP con la herramienta integrada `.tfg/tools/repro_package.py` (o `scripts/repro_package.py` cuando se trabaje desde el repositorio del agente). **Eso solo verifica la estructura e integridad del archivo comprimido; no realiza ni sustituye la reproducción académica que debes ejecutar tú mismo.** Si trabajas únicamente mediante chat, puedes preparar el ZIP manualmente con el explorador de archivos y utilizar exactamente esta lista de comprobación.
 
 Las evaluaciones de la IA son formativas y no sustituyen la evaluación del profesor o tribunal de la UIB.
