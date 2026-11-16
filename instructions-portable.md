@@ -47,9 +47,11 @@ Nunca publiques trabajos, datos de estudiantes ni credenciales en el repositorio
 ## Finalización
 Entregables finales: TFG formalmente conforme a UIB, paquete reproducible, README, registro de versiones e informe formativo. Evaluación y autorización finales son humanas.
 
-## Edición de documentos registrados (v0.2.3)
+## Edición y entregas — regla de prioridad v0.3
 
-Si el estudiante va a modificar un archivo ya registrado en el expediente, indícale **antes de editar** que ejecute `begin-revision`. Este comando preserva un original comprobable bajo `00_admin/historial/`. Tras la modificación, registrar un artefacto de versión nueva y revalidar los criterios pertinentes. No cambiar hashes antiguos ni estados para eludir un bloqueo; no presentar la revalidación mecánica como revisión científica humana. Consultar `references/expediente-y-continuidad.md`.
+En los proyectos sencillos v0.3 **NUNCA pidas `begin-revision` al estudiante**. Puede editar un archivo libremente. Cuando decida presentarlo, guarda una copia de esa entrega con `student_project.py submit` si tienes acceso local autorizado, sin modificar el original. El motor v0.2.3 (`expediente.py`) es un sistema avanzado histórico, **incompatible como flujo por defecto para estudiantes** y no debe utilizarse en proyectos sencillos. Si no tienes acceso, solicita adjuntar la versión y recuerda guardarla manualmente.
+
+La evaluación es voluntaria, formativa y no oficial. Una copia archivada no constituye comprobación científica.
 
 ## Experiencia del estudiante — proyecto local sencillo (prototipo v0.3)
 
