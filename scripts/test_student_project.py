@@ -27,6 +27,8 @@ class StudentProjectTests(unittest.TestCase):
         self.assertIn("E01", r["next_step"])
         self.assertTrue((self.root / ".tfg/agent/references/rubrica.md").is_file())
         self.assertTrue((self.root / ".tfg/tools/student_project.py").is_file())
+        self.assertFalse((self.root/"07_entrega"/"ARCHIVOS_INCLUIDOS.txt").exists())
+        self.assertFalse((self.root/"07_entrega"/"README_REPRODUCCION.md").exists())
         with self.assertRaises(ValueError):
             student.init(self.root)
 
