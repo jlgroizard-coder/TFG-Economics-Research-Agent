@@ -21,7 +21,7 @@ SENSITIVE_PARTS = {"credenciales", "credentials", "secret", "secrets", "password
                    "passwords", "token", "tokens", "api_key", "apikey",
                    "private", "privado", "confidential", "confidencial",
                    "restringido", "restricted", "descartado", "discarded",
-                   "backup", "backups", "borrador", "draft", "old"}
+                   "backup", "backups", "borrador", "draft", "old", "restringidos", "restringidas", "descartados", "descartadas", "confidenciales", "privados", "privadas"}
 SECRET_EXTENSIONS = {".pem", ".key", ".p12", ".pfx"}
 MAX_FILES = 2000
 MAX_BYTES = 2_000_000_000
