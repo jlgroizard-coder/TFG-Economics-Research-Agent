@@ -6,8 +6,8 @@
 
 ## Primeros pasos
 
-1. Crea una carpeta privada en tu ordenador llamada `Mi_TFG` y úsala únicamente para tu trabajo. Conserva una copia de seguridad periódica.
-2. Abre esa carpeta como proyecto en un tutor compatible con archivos locales. Comprueba qué permisos de lectura y escritura le das.
+1. Empieza conversando con la IA sobre tu tema. Es recomendable mantener una carpeta privada `Mi_TFG` con subcarpetas para propuesta, literatura, datos, análisis y manuscrito. Puedes crearla manualmente o pedir ayuda si das permiso de acceso. Conserva copias de seguridad.
+2. Elige trabajar con un proyecto local conectado **o** con un chat al que adjuntas archivos. No necesitas conceder acceso local para que el tutor te oriente y evalúe.
 3. Escribe: **«Quiero empezar mi TFG de Economía. Mi tema es… Ayúdame a organizar mi proyecto y a preparar mi siguiente entrega»**.
 4. Guarda en tu carpeta tus documentos, lecturas, datos y revisiones; revisa los cambios que sugiera la IA.
 5. Cuando tengas una entrega, escribe **«Evalúa esta versión según la etapa del TFG que me corresponde»**.
@@ -48,3 +48,9 @@ Según la guía interna del TFG de Economía UIB: E01 (dos preguntas), E02 (bibl
 - «Comprueba si las cifras del manuscrito coinciden con los resultados del código».
 
 **Recuerda:** la responsabilidad intelectual y la entrega del TFG son tuyas. La IA es un instrumento de aprendizaje; tu profesor de la UIB dirige el trabajo y decide su evaluación académica.
+
+## Audita tus resultados con la IA
+
+Cuando hayas producido resultados, di **«Audita la replicación de los resultados de mi TFG: contrasta mis datos y programas con las tablas, figuras y afirmaciones del manuscrito; explícame qué se verifica y qué no»**. Aporta los archivos necesarios o autoriza su lectura. La IA podrá ejecutar cálculos cuando su entorno y permisos lo permitan, y debe declarar cualquier límite. Comprende y comprueba las discrepancias: un resultado «ejecutado» no equivale necesariamente a una conclusión científica correcta.
+
+**Entrega al tutor de la UIB un ZIP con las carpetas y archivos realmente empleados**, sin archivos descartados ni credenciales o datos restringidos sin permiso. No se requiere un ZIP especial ni listas técnicas adicionales. Consulta [la guía de auditoría](REPRODUCIBILIDAD_Y_ZIP_FINAL.md).
