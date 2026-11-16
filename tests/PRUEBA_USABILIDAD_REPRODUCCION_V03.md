@@ -82,3 +82,13 @@ El ZIP solicitado por el tutor de la UIB incluye los **materiales necesarios de 
 - Introducir nombres de archivos `datos_restringidos.csv`, `exploratorio_descartado.csv`, `api_key.txt`, `credenciales.txt`; el empaquetador debe bloquear esos nombres sospechosos, sin pretender identificar todos los secretos.
 - La lista de archivos excluidos debe mostrarse y revisarse antes de generar el ZIP. **Una lista completa de dependencias no puede inferirse del nombre del fichero:** el estudiante debe ejecutar la prueba desde un ZIP extraído.
 - Ejecutar de nuevo las pruebas técnicas, pero **no asignar puntuaciones nuevas A/B/C** sin observar conversaciones reales y, posteriormente, estudiantes voluntarios.
+
+## Reorientación 16-11-2026: experiencia real v0.3
+
+Este protocolo anterior incluía la herramienta de ZIP selectivo; **no debe interpretarse como requisito de crear un ZIP especial**. Los siguientes criterios tienen prioridad:
+
+1. El estudiante inicia su tutoría inmediatamente con una pregunta económica; crear carpetas es una recomendación útil, no un bloqueo.
+2. Puede solicitar explícitamente que **la IA audite** la replicación; el tutor debe contrastar manuscrito y resultados y ejecutar cálculos cuando pueda y esté autorizado. Si no dispone de ejecución o de archivos esenciales, declararlo.
+3. No basta comprobar el contenido de un ZIP ni una lista de archivos para afirmar replicación.
+4. El ZIP exigido por el tutor de la UIB es un único archivo comprimido ordinario de carpetas y ficheros utilizados, excluyendo pruebas descartadas y datos protegidos.
+5. La prueba real debe observar el diálogo y las decisiones del agente, no solo los scripts auxiliares.
