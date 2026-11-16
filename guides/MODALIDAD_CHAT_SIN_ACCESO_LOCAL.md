@@ -31,16 +31,13 @@ Si quieres comparar cambios, adjunta **ambas versiones**, o la anterior y un res
 
 Las notas del tutor IA no son oficiales ni necesitan autorización del profesor para solicitarse. La aprobación académica de las propuestas y la calificación de la UIB corresponden a su profesorado y tribunal.
 
-## Autoevaluación de reproducción
+## Auditoría de replicación y archivos para el profesor
 
-En `07_entrega/` guarda:
-- `TFG_final.pdf`, cuando esté listo;
-- `README_REPRODUCCION.md` con el programa/hoja usado, origen de datos, pasos y comparación de resultados;
-- `ARCHIVOS_INCLUIDOS.txt`, una lista de rutas relativas de archivos necesarios.
+Cuando tengas resultados, adjunta el manuscrito y los datos, programas o tablas que decidas compartir. Solicita: **«Audita la replicación de mis resultados: comprueba los cálculos y compara las cifras con el manuscrito. Declara qué has ejecutado, qué difiere y qué no puedes comprobar»**.
 
-Puedes copiar la plantilla del README y la guía desde el repositorio, o crear un documento de texto propio con esos apartados. **Tú mismo** debes extraer una copia de los archivos seleccionados, seguir los pasos, contrastar cifras y anotar errores. El tutor puede explicar las instrucciones, pero no debe afirmar que reprodujo resultados si no lo hizo.
+Si el chat no puede ejecutar los programas, debe explicarlo y darte instrucciones para hacerlo por tu cuenta. Nunca debe afirmar que ha reproducido un resultado que no pudo comprobar. No necesitas conceder acceso a tu ordenador para recibir orientación.
 
-Para el ZIP, crea una **carpeta temporal nueva** con solo el manuscrito final y los archivos efectivamente utilizados, conservando las mismas subcarpetas. Comprímela desde el explorador de archivos y ábrela para verificar el contenido. No incluyas borradores descartados, informes de autoevaluación, credenciales ni datos restringidos sin permiso.
+Al final, el tutor de la UIB te solicitará **un ZIP con las carpetas y archivos empleados realmente en tu TFG**, elaborado con el explorador de archivos si lo prefieres. No tienes que preparar un ZIP especial de reproducción ni un inventario técnico adicional. Excluye archivos descartados y cualquier dato privado o restringido sin permiso.
 
 ## Pautas fundamentales
 
