@@ -1,51 +1,32 @@
-# Prueba autónoma de reproducibilidad y ZIP final — TFG Economía UIB
+# Auditoría de replicación y materiales del TFG — guía para estudiantes
 
-**Orientación del tutor académico para el curso 2026–27.** El estudiante es responsable de comprobar que puede reproducir sus resultados y de preparar un ZIP con los materiales que realmente sustentan el TFG. Este ZIP es un **requisito de trabajo del tutor**; no se presenta aquí como sustituto ni como norma general del depósito oficial de la UIB. La entrega oficial del manuscrito PDF seguirá las instrucciones de la Facultad.
+El estudiante puede pedir en cualquier momento a su tutor IA: **«Audita la replicación de los resultados de mi TFG»**. La IA examinará la documentación y los datos que tenga a su disposición, ejecutará procedimientos cuando esté autorizada y sea técnicamente posible, y comparará sus salidas con los resultados del manuscrito. **No debe afirmar haber reproducido lo que no ha podido ejecutar o contrastar**.
 
-## Una misma estructura, use o no un tutor IA conectado
+## Organización recomendada, no barrera de entrada
 
-Mantén una carpeta de proyecto en el ordenador, aunque trabajes únicamente mediante chat y adjuntos. Si utilizas la modalidad de nube, reproduce la estructura en tu almacenamiento elegido.
+Al comenzar, el tutor IA puede recomendar crear un proyecto con carpetas para propuesta, literatura, datos, análisis, manuscrito y evaluaciones. Quien no autorice acceso local puede crear las carpetas manualmente y adjuntar únicamente los archivos que elija. No hace falta Git ni terminal para solicitar orientación o una evaluación informativa.
 
-- `01_propuesta/`: la propuesta aprobada y sus versiones relevantes
-- `02_literatura/`: bibliografía y fichas esenciales, **sin obligación de incluir todos los PDF de terceros**
-- `03_datos/`: datos que se pueden compartir, diccionario, fuentes y permisos
-- `04_analisis/`: programas y pasos necesarios para generar resultados
-- `05_manuscrito/`: manuscrito de trabajo (no es obligatorio incluir borradores históricos)
-- `06_evaluaciones/`: informes formativos privados (no es obligatorio enviarlos al tutor)
-- `07_entrega/`: PDF definitivo, README de reproducción, lista de archivos a incluir
-- `.tfg/`: historial interno opcional del agente, **no incluir en el ZIP**
+## Qué debe revisar la auditoría de la IA
 
-No tienes que entregar notas descartadas, versiones intermedias no utilizadas, búsquedas fallidas, cachés, conversaciones ni todo el trabajo exploratorio. **Sí debes incluir lo indispensable para comprobar todas las cifras, tablas, gráficos y afirmaciones principales del manuscrito.**
+1. **Fuente y trazabilidad:** origen y condiciones de uso de los datos, variables, transformaciones y periodos.
+2. **Ejecución:** programas o cálculos efectivamente ejecutados, versiones y dependencias. Si la IA no puede ejecutarlos, debe explicar cómo probarlos y declarar esa limitación.
+3. **Correspondencia:** comprobar tamaño de muestra, estadísticas, coeficientes, tablas, figuras, unidades, títulos y afirmaciones del texto frente a las salidas.
+4. **Alcance y resultado:** distinguir reproducción completa, parcial o no comprobada; describir discrepancias concretas y próximos pasos para resolverlas. Una ejecución correcta del programa no valida automáticamente su identificación causal ni su calidad científica.
+5. **Autonomía del estudiante:** debe comprender el procedimiento, revisar las discrepancias y poder explicar la obtención de sus resultados. Puede repetir una prueba desde una copia limpia para comprobar que no depende de rutas o archivos externos.
 
-## Prueba autónoma obligatoria antes de entregar
+La auditoría es **formativa**; no sustituye la revisión del profesor de la UIB.
 
-1. **Selecciona:** identifica los archivos realmente usados por tu TFG. Añádelos a `07_entrega/ARCHIVOS_INCLUIDOS.txt`, una ruta relativa por línea. Incluye el PDF final y `07_entrega/README_REPRODUCCION.md`.
-2. **Explica:** en el README detalla requisitos, origen y fecha de los datos, transformaciones, programas y orden de ejecución, y señala exactamente qué tablas y figuras produce cada paso.
-3. **Comprueba:** aparta una copia del paquete de los archivos de trabajo, descomprímela en otra carpeta y trabaja solo desde allí. Si el análisis usa Excel, Stata, R, Python u otro programa, abre los datos y ejecuta el procedimiento indicado. Si es un trabajo teórico, verifica las derivaciones o simulaciones; si es una revisión crítica, repite el protocolo de búsqueda/selección con sus límites.
-4. **Contrasta:** compara con el TFG los números clave, unidades, periodos, tamaños muestrales, tablas y figuras. No basta con que los archivos existan: **el resultado debe coincidir**. Corrige y repite si hay discrepancias.
-5. **Documenta:** en el README indica fecha, programa, entorno, pruebas ejecutadas, diferencias y si la reproducción fue **completa, parcial o no conseguida**. Nunca afirmes que está verificada si no se realizó.
-6. **Prepara el ZIP:** incorpora solo lo seleccionado. Antes de enviarlo, comprueba que se abre, que no faltan archivos y que no contiene datos privados o de terceros sin permiso.
-7. **Entrega:** facilita al tutor de la UIB el ZIP de materiales y la entrega institucional del PDF por los canales que correspondan. No asumas que el ZIP sustituye al depósito de Aula Digital.
+## ZIP solicitado por el tutor académico
 
-## Qué hacer con datos restringidos o de gran tamaño
+En la entrega final, el profesor solicitará **un único ZIP con las carpetas y archivos realmente empleados en la elaboración del TFG** y necesarios para examinar o replicar los resultados incluidos: manuscrito final, datos compartibles, documentación de fuentes, programas, hojas de cálculo, tablas y gráficos utilizados, e instrucciones suficientes para comprender las dependencias.
 
-Nunca compartas información protegida o sin autorización. Si no puedes adjuntar los microdatos, incluye un diccionario, fuente oficial, condiciones de acceso y código que permita reproducir el análisis a quien tenga permisos legítimos; indica claramente que la reproducción de extremo a extremo **no se puede verificar sin ellos**. El tutor decidirá si la documentación es suficiente. No incorpores archivos protegidos al ZIP por comodidad.
+**No hace falta incluir** todas las versiones descartadas, archivos exploratorios no utilizados, conversaciones con la IA, informes de autoevaluación o archivos de funcionamiento del agente. Tampoco hay que preparar un ZIP adicional específico de «reproducción» ni un inventario técnico obligatorio.
 
-## Lista de comprobación personal
+El estudiante puede comprimir las carpetas seleccionadas con el explorador de archivos de su ordenador. Si su IA tiene acceso y permiso, puede ayudar a revisar su contenido. No debe adjuntar contraseñas, credenciales ni información restringida sin autorización. Cuando no sea posible compartir datos protegidos, documentará las fuentes y las instrucciones de acceso legítimo.
 
-- [ ] El ZIP contiene la versión final del TFG.
-- [ ] He incluido únicamente los archivos necesarios para verificar mis resultados.
-- [ ] He documentado las fuentes, variables, programas y pasos.
-- [ ] He ejecutado yo mismo el procedimiento desde otra carpeta o copia limpia.
-- [ ] He comparado resultados, gráficos y tablas con el manuscrito.
-- [ ] He explicado cualquier diferencia, imposibilidad o restricción de acceso.
-- [ ] He comprobado que el ZIP no incluye archivos privados o sin permiso.
-- [ ] Sé explicar al tutor cómo se obtiene cada resultado principal.
+El ZIP para el tutor es un complemento de trabajo y **no sustituye el depósito institucional del PDF** conforme a las instrucciones de la Facultad.
 
-## Herramienta de ayuda (opcional)
+## Pregunta útil para el tutor IA
 
-Si el agente tiene permiso de lectura de tu proyecto, puede mostrar los archivos no seleccionados, señalar nombres sospechosos y crear el ZIP con la herramienta integrada `.tfg/tools/repro_package.py` (o `scripts/repro_package.py` cuando se trabaje desde el repositorio del agente). **Eso solo verifica la estructura e integridad del archivo comprimido; no realiza ni sustituye la reproducción académica que debes ejecutar tú mismo.** Si trabajas únicamente mediante chat, puedes preparar el ZIP manualmente con el explorador de archivos y utilizar exactamente esta lista de comprobación.
+> «Quiero que audites la replicación de los resultados que presento en mi TFG. Comprueba mis datos, programas, tablas y figuras frente al manuscrito. Ejecuta lo que esté autorizado y explica qué resultados has verificado, cuáles no coinciden y cuáles no puedes comprobar. Después dime qué carpetas y archivos utilizados debo incluir en el ZIP que entregaré al profesor».
 
-Las evaluaciones de la IA son formativas y no sustituyen la evaluación del profesor o tribunal de la UIB.
-
-**Aviso sobre privacidad:** los bloqueos por nombres de archivos son parciales y conservadores: un nombre inocente puede activar una alerta y un archivo con un nombre aparentemente normal puede contener información restringida o contraseñas. Antes de compartir el ZIP, revisa manualmente el contenido de todos los archivos incluidos. La herramienta no identifica todas las dependencias faltantes ni certifica la reproducción.
