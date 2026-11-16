@@ -1,5 +1,8 @@
 # Expediente privado y continuidad de evidencia entre versiones (v0.2)
 
+> **IMPORTANTE — prioridad del proyecto sencillo v0.3:** el procedimiento `begin-revision` que aparece más abajo es **histórico y exclusivo del motor avanzado `scripts/expediente.py`**. **Nunca debe solicitarse al estudiante de grado en el flujo sencillo v0.3**. Puede modificar libremente los documentos; cuando entregue uno, el agente, si tiene permiso local, guardará la copia con `student_project.py submit`. En modo chat sin acceso local, el alumno conserva sus versiones manualmente. Estas reglas v0.3 prevalecen sobre cualquier instrucción de versionado v0.2.
+
+
 El repositorio público contiene **solo el agente y casos sintéticos**. El expediente real de cada estudiante vive fuera del repositorio, en una carpeta privada con permisos gestionados por la persona estudiante o tutor. No se transmite automáticamente a ningún proveedor; la persistencia se logra guardando archivos y volviéndolos a abrir en cada sesión. Las aplicaciones web sin acceso a esos archivos deben pedir que el usuario los aporte.
 
 ## Archivos del expediente
