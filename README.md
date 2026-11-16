@@ -25,11 +25,11 @@ El tutor de la UIB solicitará al final **un ZIP con el manuscrito definitivo y 
 
 ## Instalación rápida
 
-**Claude Code:** clona o descarga el repositorio y abre su carpeta en Claude Code. Se leerá `CLAUDE.md` y estarán disponibles las skills de `.claude/skills/`.
+**Claude Code (con acceso local autorizado):** un tutor o responsable técnico puede preparar previamente el entorno y entregar al estudiante una carpeta de proyecto ya creada. El estudiante abre esa carpeta y conversa con el agente; **no necesita clonar GitHub ni usar terminal**. El repositorio y su instalación técnica están destinados a quien configura el entorno, no al principiante.
 
-**Codex:** abre la carpeta del repositorio en Codex CLI o IDE. Sigue `AGENTS.md` y las skills de `.agents/skills/`. Usa `$tfg-tutor`, `$literature-review`, `$research-design`, `$tfg-evaluator` y `$reproducibility-audit` según la tarea.
+**Codex (con acceso local autorizado):** abre una carpeta de proyecto del estudiante previamente preparada. El equipo que despliega el agente es quien configura las herramientas; los comandos y skills no son requisitos para el estudiante.
 
-**ChatGPT web, Claude web, Gemini:** copia `instructions-portable.md`, `references/rubrica.md`, `references/protocolo-evaluacion.md` y `references/guia-tfg-uib-2026-27.md` a un proyecto con instrucciones personalizadas. No se garantiza que puedan ejecutar scripts.
+**ChatGPT web, Claude web, Gemini:** utiliza [la guía autónoma para la modalidad sin acceso local](guides/MODALIDAD_CHAT_SIN_ACCESO_LOCAL.md), que incluye los documentos adicionales y las plantillas necesarias. El estudiante gestiona las carpetas y el ZIP manualmente; no se garantiza ejecución de scripts ni acceso a archivos no adjuntados.
 
 ## Flujo del estudiante
 
