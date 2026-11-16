@@ -70,6 +70,15 @@ Para ensayar detección de errores, preparar una segunda versión con cifra publ
 
 ## Importante
 
-La reproducción es **actividad autónoma del estudiante**. En la prueba sintética, la ejecuta el operador que representa al estudiante; la herramienta no debe adjudicarse la responsabilidad. Una prueba automatizada de regressión o ZIP no permite concluir que el usuario ha aprendido a reproducir resultados.
+La reproducción es **actividad autónoma del estudiante**. En la prueba sintética, la ejecuta el operador que representa al estudiante; la herramienta no debe adjudicarse la responsabilidad. Una prueba automatizada de regresión o ZIP no permite concluir que el usuario ha aprendido a reproducir resultados.
 
 El ZIP solicitado por el tutor de la UIB incluye los **materiales necesarios de la investigación final**, no los archivos que no se incorporaron al manuscrito. El ZIP no sustituye el depósito institucional del PDF.
+
+## Regresión específica tras el informe de usabilidad (noviembre de 2026)
+
+- Comprobar que **no** aparecen instrucciones `begin-revision` como requisito del estudiante del flujo sencillo; el motor legado se mantiene aislado.
+- Comprobar que el paquete de modo chat incluye continuidad, indicadores técnicos, procedimiento de reproducción y plantillas. El estudiante puede usar chat sin acceso local.
+- Comprobar que el principiante comienza **desde una carpeta ya preparada por una persona responsable** y no tiene que clonar el repositorio. La preparación inicial todavía no está resuelta como instalador de un clic.
+- Introducir nombres de archivos `datos_restringidos.csv`, `exploratorio_descartado.csv`, `api_key.txt`, `credenciales.txt`; el empaquetador debe bloquear esos nombres sospechosos, sin pretender identificar todos los secretos.
+- La lista de archivos excluidos debe mostrarse y revisarse antes de generar el ZIP. **Una lista completa de dependencias no puede inferirse del nombre del fichero:** el estudiante debe ejecutar la prueba desde un ZIP extraído.
+- Ejecutar de nuevo las pruebas técnicas, pero **no asignar puntuaciones nuevas A/B/C** sin observar conversaciones reales y, posteriormente, estudiantes voluntarios.
