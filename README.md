@@ -13,7 +13,7 @@ Escribe: **«Quiero empezar mi TFG sobre…»**. El tutor debe ayudar inmediatam
 
 La orientación académica y la autoevaluación **no dependen** de la autorización de acceso local. Los estudiantes no necesitan Git, terminal, JSON ni comandos de versionado. El despliegue inicial del proyecto local puede requerir la ayuda de un responsable técnico.
 
-[Guía rápida](guides/GUIA_RAPIDA_ESTUDIANTE.md) · [Modalidad solo chat](guides/MODALIDAD_CHAT_SIN_ACCESO_LOCAL.md) · [Recorrido v0.3](design/v0.3-recorrido-estudiante.md).
+[Guía rápida](guides/GUIA_RAPIDA_ESTUDIANTE.md) · [Modalidad solo chat (3 pasos)](guides/MODALIDAD_CHAT_SIN_ACCESO_LOCAL.md) · [Documento único para adjuntar](guides/PAQUETE_UNICO_CHAT.md) · [Recorrido v0.3](design/v0.3-recorrido-estudiante.md).
 
 ## Auditoría de replicación — petición del estudiante
 
@@ -40,3 +40,8 @@ La antigua utilidad `scripts/repro_package.py` queda **legada, opcional y no for
 - `tests/`: pruebas funcionales y protocolos de usabilidad.
 
 **Estado:** prototipo técnico, aún pendiente de probar conversaciones completas y usos reales con estudiantes principiantes. No incorporar datos personales o trabajos reales al repositorio público.
+
+## Dos precisiones de uso
+
+- **Primer acceso local:** un alumno que parte de cero puede abrir una carpeta de proyecto previamente preparada por quien despliega el tutor, desde la opción de abrir carpeta/proyecto de su aplicación. La inicialización requiere un entorno compatible y una configuración inicial; no se ha desarrollado un instalador de un clic.
+- **Archivos mezclados:** antes de comprimir, crear `TFG_para_entregar` y **copiar** únicamente los archivos empleados, sin borrar originales; después comprimir esa carpeta y probar el contenido. [Instrucciones paso a paso](guides/REPRODUCIBILIDAD_Y_ZIP_FINAL.md).
