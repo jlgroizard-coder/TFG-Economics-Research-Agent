@@ -2,7 +2,7 @@
 
 **Puedes utilizar este tutor aunque no sepas programar.** Es un apoyo para investigar, leer artículos, organizar tu trabajo y recibir comentarios sobre tus borradores; **no sustituye a tu profesor o profesora de la UIB ni emite notas oficiales**.
 
-> **Nota:** el uso sencillo descrito aquí es el diseño propuesto para la versión 0.3, todavía no desplegado completamente. En la versión técnica 0.2.3 algunas operaciones locales requieren herramientas adicionales.
+> **Nota:** la v0.3 es un prototipo. Puedes trabajar mediante chat y adjuntos sin instalar el motor técnico; la experiencia con archivos locales necesita una aplicación compatible y puede requerir preparación inicial.
 
 ## Primeros pasos
 
@@ -26,13 +26,13 @@ Si utilizas un **chat web sin acceso a archivos locales**, puedes adjuntar el do
 7. **Pide una evaluación cuando hayas avanzado.** Las notas son orientativas, no predicen tu calificación oficial y pueden cambiar si se detectan errores.
 8. **Protege la privacidad.** No publiques trabajos privados, información personal de terceros, datos restringidos o contraseñas. Consulta las normas UIB sobre autoría y uso de IA.
 
-## Organización común y reproducción obligatoria
+## Organización recomendada y auditoría de resultados
 
 Aunque utilices únicamente un chat y **no permitas al agente acceder a tu ordenador**, conserva una carpeta `Mi_TFG` con las subcarpetas de propuesta, literatura, datos, análisis, manuscrito, evaluaciones y entrega. Puedes mantenerlas manualmente. No es necesario compartir toda esa carpeta con la IA.
 
-**Antes de la entrega final deberás reproducir tú mismo los resultados**, trabajando sobre una copia independiente y contrastando las cifras, tablas y figuras con el manuscrito. El tutor de la UIB solicitará un **ZIP con el PDF final y los archivos utilizados y necesarios**; no debes incluir todos los borradores o experimentos descartados. Nunca incorpores datos restringidos sin permiso.
+**Cuando dispongas de resultados, pide a tu IA que audite su replicación**: debe comprobar los cálculos y contrastarlos con las tablas, cifras y figuras del manuscrito, si sus herramientas y permisos lo permiten. Tú debes comprender lo que ha comprobado y repetir los pasos necesarios para poder defender tus resultados. El tutor de la UIB solicitará un **ZIP con el PDF final y los archivos utilizados y necesarios**; no debes incluir todos los borradores o experimentos descartados. Nunca incorpores datos restringidos sin permiso.
 
-Consulta [la guía de reproducción y ZIP final](REPRODUCIBILIDAD_Y_ZIP_FINAL.md). La comprobación automática de un ZIP no equivale a reproducir el análisis.
+Consulta [la guía de auditoría y materiales](REPRODUCIBILIDAD_Y_ZIP_FINAL.md). La comprobación automática de un ZIP no equivale a reproducir el análisis.
 
 ## Hitos académicos importantes del curso 2026–27
 
