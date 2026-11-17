@@ -46,3 +46,7 @@ Registrar por escenario:
 - diferencias entre modo chat, sin acceso a archivos, y modo local autorizado.
 
 No confundir las pruebas automáticas de código con la experiencia conversacional. No modificar el agente durante la prueba; comunicar los fallos al desarrollador antes de corregirlos.
+
+## Prueba adicional de onboarding para una persona no técnica
+
+Pide a un evaluador que realice el proceso real (no una respuesta inventada): abrir un proyecto con el asistente compatible y seleccionar **Abrir carpeta/proyecto**; comprobar si existe un proyecto preparado o si necesita configuración previa por el responsable. Para modo chat, adjuntar únicamente `guides/PAQUETE_UNICO_CHAT.md` y comenzar E01. Con un proyecto ficticio que contenga datos útiles y descartes mezclados en la misma carpeta, comprobar que la IA enseña a **copiar solo los archivos utilizados a una carpeta temporal**, sin borrar originales ni confundirlo con la auditoría científica. Evaluar si el mensaje de nota orientativa se entiende sin explicaciones de fracciones.
