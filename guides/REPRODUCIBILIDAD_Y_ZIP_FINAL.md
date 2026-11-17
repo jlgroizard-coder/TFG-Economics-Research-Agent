@@ -22,6 +22,17 @@ En la entrega final, el profesor solicitará **un único ZIP con las carpetas y 
 
 **No hace falta incluir** todas las versiones descartadas, archivos exploratorios no utilizados, conversaciones con la IA, informes de autoevaluación o archivos de funcionamiento del agente. Tampoco hay que preparar un ZIP adicional específico de «reproducción» ni un inventario técnico obligatorio.
 
+**Si tienes borradores descartados mezclados con datos o programas utilizados, no comprimas directamente todas las carpetas del proyecto.** Prepara primero una copia limpia de lo que vas a entregar:
+
+1. Crea una carpeta nueva llamada `TFG_para_entregar`.
+2. Dentro, reproduce únicamente las subcarpetas relevantes, por ejemplo `03_datos`, `04_analisis`, `05_manuscrito` y `07_entrega`.
+3. Copia **solo los archivos que aparecen efectivamente en el trabajo** o que son indispensables para obtener las tablas, figuras y resultados. No muevas ni borres los originales: copia los seleccionados.
+4. En Windows puedes seleccionar archivos individuales con **Ctrl + clic**; en macOS, con **Comando (⌘) + clic**. Utiliza «Copiar» y después «Pegar» en la carpeta limpia.
+5. Revisa el contenido de cada subcarpeta, comprueba que no haya credenciales, identificadores personales ni datos restringidos sin autorización y que tampoco falten archivos necesarios.
+6. Comprime `TFG_para_entregar` con la opción de comprimir del explorador/Finder; descomprímelo en otra ubicación y comprueba que es posible seguir el análisis desde esa copia.
+
+No hace falta un segundo ZIP de reproducción ni un fichero manifiesto obligatorio. Este procedimiento evita incluir sin querer pruebas descartadas al comprimir carpetas de trabajo enteras.
+
 El estudiante puede comprimir las carpetas seleccionadas con el explorador de archivos de su ordenador. Si su IA tiene acceso y permiso, puede ayudar a revisar su contenido. No debe adjuntar contraseñas, credenciales ni información restringida sin autorización. Cuando no sea posible compartir datos protegidos, documentará las fuentes y las instrucciones de acceso legítimo.
 
 El ZIP para el tutor es un complemento de trabajo y **no sustituye el depósito institucional del PDF** conforme a las instrucciones de la Facultad.
