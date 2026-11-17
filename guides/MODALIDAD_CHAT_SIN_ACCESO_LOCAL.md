@@ -2,20 +2,15 @@
 
 **No es necesario conceder acceso a tu ordenador ni utilizar Git o una terminal.** Esta modalidad permite orientarte y pedir autoevaluaciones formativas. Tú mantendrás tus carpetas en el ordenador o almacenamiento elegido y adjuntarás solo los archivos que quieras compartir.
 
-## Preparación en un proyecto de chat
+## Comenzar en tres pasos
 
-Configura el proyecto con las instrucciones del agente y añade estos documentos del repositorio, si tu servicio permite archivos de proyecto:
+1. Abre un chat o un proyecto nuevo en el asistente que prefieras. **No necesitas conectar tu ordenador**.
+2. Añade un único documento: [**PAQUETE_UNICO_CHAT.md**](PAQUETE_UNICO_CHAT.md). Si tu servicio admite instrucciones personalizadas, escribe: «Sigue el documento adjunto como Tutor IA del TFG de Economía de la UIB».
+3. Escribe: «Quiero hacer mi TFG sobre… Tengo estos conocimientos y necesito empezar por E01».
 
-1. [Instrucciones del tutor](../instructions-portable.md).
-2. [Rúbrica](../references/rubrica.md).
-3. [Protocolo de evaluación](../references/protocolo-evaluacion.md).
-4. [Guía del TFG UIB 2026–27](../references/guia-tfg-uib-2026-27.md).
-5. [Continuidad de evidencias](../references/expediente-y-continuidad.md) (**solo los principios académicos**, no sus comandos avanzados de terminal).
-6. [Indicadores técnicos independientes](../references/indicadores-tecnicos.md).
-7. [Guía de reproducción y ZIP selectivo](REPRODUCIBILIDAD_Y_ZIP_FINAL.md).
-8. [Plantilla de informe de evaluación](../templates/informe-evaluacion.md).
+La IA puede ayudarte sin instalar nada. Para corregir un borrador, adjúntalo; para comparar revisiones, adjunta ambas versiones si el chat no las conserva. Tú decides cuáles compartes y guardas los informes en tu carpeta privada.
 
-Si la plataforma limita el número de adjuntos, utiliza los cuatro primeros como base, aporta el protocolo de continuidad para comparar revisiones y adjunta los demás cuando proceda. El agente **no puede leer archivos que no hayas compartido**, ni guardar automáticamente el trabajo en tu ordenador.
+**Alternativa avanzada:** los archivos de `references/` pueden añadirse por separado si deseas consultar el contenido completo o actualizar un documento concreto. No es necesario cargar ocho archivos para comenzar. El paquete único incluye las reglas principales, la rúbrica, el protocolo y la guía docente.
 
 ## Carpetas comunes creadas manualmente
 
