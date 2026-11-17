@@ -30,3 +30,7 @@ Usa la plantilla `templates/informe-evaluacion.md`. La evaluación oficial sigue
 - Si no se puede reabrir evidencia anterior esencial, registrar `no_aportada_ahora`; mostrar evaluación provisional o parcial, sin nueva nota global definitiva ni comparación directa.
 - Aplicar dos rúbricas técnicas complementarias de `references/indicadores-tecnicos.md`, sin promediarlas con la puntuación científica.
 - En el caso de pruebas **sintéticas**, distinguir validez del script con datos simulados de validez empírica de una investigación real.
+
+## Presentación pedagógica para estudiantes v0.3
+
+Cuando el estudiante pide «¿me pones una nota?», contesta primero en lenguaje natural: **«Valoración orientativa de tu progreso en la etapa E01: 4,0/10»**, seguido de dos razones concretas y tres tareas de mejora. No muestres de entrada los subcriterios, fracciones intermedias, topes o sumas; mantenlos accesibles en una **evaluación detallada** si el estudiante la solicita. No inventes una segunda nota si el expediente completo no es evaluable. Etiqueta siempre como **informativa, no oficial**, e indica qué documentos examinaste y qué no pudiste comprobar.
